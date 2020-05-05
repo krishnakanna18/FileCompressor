@@ -1,7 +1,7 @@
 import sys,os,_heapq,functools,base64,struct
 from array import array
 op=sys.stdout
-sys.stdout=open("./input3.bin","wb")
+sys.stdout=open("./input4.bin","wb")
 
 def convert_LZ77(data):
     def longestpresent(word,pos):
@@ -64,23 +64,31 @@ def encode(compressed,codes):
     return document
 
 def code_write(codes):
-    op1=sys.stdout
-    sys.stdout=op
-    print(codes)
-
-    sys.stdout=op1
-    # to_write=""
+    # op1=sys.stdout
+    # sys.stdout=op
+    # # print(codes)
     # for char in codes:
-    #     sys.stdout.write(bytes(char,encoding="ascii"))
-    #     sys.stdout.write(bytes([len(codes[char])]))
-    #     to_write+=codes[char]
-    # sys.stdout.write(bytes("\n",encoding="ascii"))
-    # i=0
-    # bin_array=array("B")
-    # while(i<len(to_write)):
-    #     bin_array.append(int(to_write[i:i+8],2))
-    #     i+=8
-    # sys.stdout.write(bytes(bin_array))
+    #     # try:
+    #     print(char,codes[char])
+    # sys.stdout=op1
+    to_write=""
+    for char in codes:
+        sys.stdout.write(bytes(char,encoding="utf-8"))
+        sys.stdout.write(bytes([len(codes[char])]))
+        to_write+=codes[char]
+    sys.stdout.write(bytes("\n",encoding="utf-8"))
+    i=0
+    bin_array=array("B")
+    while(i<len(to_write)):
+        bin_array.append(int(to_write[i:i+8],2))
+        i+=8
+    sys.stdout.write(bytes([len(bin_array)]))
+    sys.stdout.write(bytes("\n",encoding="utf-8"))
+    sys.stdout.write(bytes(bin_array))
+    sys.stdout.write(bytes("\n",encoding="utf-8"))
+    sys.stdout.write(bytes([len(to_write)]))
+    sys.stdout.write(bytes("\n",encoding="utf-8"))
+
 
         
 def file_write(document,bin_array):
@@ -95,7 +103,7 @@ def file_write(document,bin_array):
 #     result=''.join()
 
 
-with open("/home/krishna/Documents/ZipFileCompressor/Web_Development_with_Node_Express.txt","r") as f:
+with open("/home/krishna/Documents/ZipFileCompressor/test-data.txt","r") as f:
     lines=f.readlines()
     to_compress='\n'.join(lines)
 # with open("/home/krishna/Documents/ZipFileCompressor/download.jpeg","rb") as image:
@@ -106,8 +114,8 @@ with open("/home/krishna/Documents/ZipFileCompressor/Web_Development_with_Node_E
 compressed=""
 convert_LZ77(to_compress)
 res=list(set(compressed))
-# f=list(map(lambda x: (compressed.count(x),x),res))
-f=list(map(lambda x: (compressed.count(x),x),list(set(to_compress))))
+f=list(map(lambda x: (compressed.count(x),x),res))
+# f=list(map(lambda x: (compressed.count(x),x),list(set(to_compress))))
 tree=list(map(lambda x: (x[0],x[1],Tree(x[0],x[1])),f))
 _heapq.heapify(tree)
 root=construct(tree)
@@ -120,8 +128,8 @@ document=encode(compressed,codes)
 # print(document)
 s=1000
 # sys.stdout.write(s.to_bytes(2,'little'))
-sys.stdout.write(bytes('1',encoding="ascii"))
-sys.stdout.write(bytes('\n',encoding="ascii"))
+# sys.stdout.write(bytes('1',encoding="ascii"))
+# sys.stdout.write(bytes('\n',encoding="ascii"))
 code_write(codes)
 file_write(document,bin_array)
 sys.stdout=op
@@ -132,21 +140,78 @@ sys.stdout=op
 # print(int("\n"))
 # bin_convert_code(codes)
 # print(document[:100])
+print(bytes("{",encoding="utf-8"))
 print("\n",len(document),len(to_compress),len(compressed))
-with open("/home/krishna/Documents/ZipFileCompressor/input3.bin","rb") as f:
+with open("/home/krishna/Documents/ZipFileCompressor/input4.bin","rb") as f:
     # print(f.read(1))
     # print(f.read(1).decode('utf-8'))
-    data=''
-    while(data!="\n"):
-        data=f.read(1).decode('utf-8')
-        print(data,"a")
-        print("got")
+    # data=''
+    # while(data!="\n"):
+    #     data=f.read(1).decode('utf-8')
+    #     print(data,"a")
+    #     print("got")
     # while(list(f.read(1))[0]!=10):
     #     print(f.read(1))
+    
+    #Reading the characters and their code sizes
+    charcters=[]
+    data=''
+    while(data!="\n"):
+        t=[]
+        data=f.read(1).decode('utf-8')
+        # print(data)
+        if(data=="\n"):
+            break
+        try:
+            t.append(data)
+        except:
+            print(data,"Erro")
+            break
+        data=f.read(1)
+        try:
+            t.append(list(data)[0])
+        except:
+            print(data,"Eroor")
+            print(list(data))
+            break
+        charcters.append(t) #list that contains the character and its codeword length
+    
+    #Reading the code words
+    char_code=dict()
+    data=''
+    i=0
+    #Reading the size of code array
+    while(data!="\n"):
+        data=f.read(1)
+        if(data.decode('utf-8')=="\n"):
+            break
+    size=list(data)[0]
+    data=f.read(size)
+    print(list(data))
+    arr=list(data)
+    decoded=''
+    for i in arr[:-2]:
+        binary=bin(i)[2:]
+        zeroes=''.join(['0' for i in range(8-len(binary))])
+        decoded+=zeroes+binary
+    #Reading the size of code string
+    data=''
+    while(data!="\n"):
+        data=f.read(1)
+        if(data.decode('utf-8')=="\n"):
+            break
+    code_size=list(data)[0]
+    binary=bin(arr[-2])[2:]
+    print(binary)
+    zeroes=''.join(['0' for i in range(code_size-len(decoded)-len(binary))])
+    decoded+=zeroes+binary
+    print(decoded) # decoded-String that contains the codeword
+    # print(data)
+    print(charcters)
     data=f.read()
     decoded=''
     # print(bin_array==list(data))
-    print(list(data)[0],"Encoded i")
+    # print(list(data)[0],"Encoded i")
     arr=list(data)
     for i in arr[:-1]:
         # print(i,bin(i)[2:])
@@ -156,14 +221,16 @@ with open("/home/krishna/Documents/ZipFileCompressor/input3.bin","rb") as f:
         decoded+=zeroes+binary
         # print(i,zeroes+binary)
     print()
-    print(len(decoded),len(document))
+    # print(len(decoded),len(document))
     binary=bin(arr[-1])[2:]
     zeroes=''.join(['0' for i in range(len(document)-len(decoded)-len(binary))])
     decoded+=zeroes+binary
-    print(bin_array[-10:-1],arr[-10:-1])
-    print(bin_array[-1],arr[-1],document[-3:-1])
-    print(decoded[-10:-1],document[-10:-1])
+    # print(bin_array[-10:-1],arr[-10:-1])
+    # print(bin_array[-1],arr[-1],document[-3:-1])
+    # print(decoded[-10:-1],document[-10:-1])
     print(decoded==document)
+    print(codes)
+    # print(compressed)
 
 
 

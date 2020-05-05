@@ -1,0 +1,5001 @@
+
+
+Web Development with
+Node and Express
+
+Ethan Brown
+
+
+Web Development with Node and Express
+
+by Ethan Brown
+
+Copyright © 2014 Ethan Brown. All rights reserved.
+Printed in the United States of America.
+
+Published by O’Reilly Media, Inc., 1005 Gravenstein Highway North, Sebastopol, 
+CA 95472.
+
+O’Reilly books may be purchased for educational, business, or sales promotional 
+use. Online editions are
+also available for most titles (http://my.safaribooksonline.com). For more 
+information, contact our corporate/
+institutional sales department: 800-998-9938 or corporate@oreilly.com.
+
+
+Editors: Simon St. Laurent and Brian Anderson
+
+Production Editor: Matthew Hacker
+Copyeditor: Linley Dolby
+Proofreader:    Rachel Monaghan
+
+July 2014:                  First Edition
+
+Revision History for the First Edition:
+
+2014-06-27:    First release
+
+Indexer: Ellen Troutman Zaig
+Cover Designer: Karen Montgomery
+Interior Designer: David Futato
+Illustrator: Rebecca Demarest
+
+See http://oreilly.com/catalog/errata.csp?isbn=9781491949306 for release 
+details.
+
+Nutshell Handbook, the Nutshell Handbook logo, and the O’Reilly logo are 
+registered trademarks of O’Reilly
+Media, Inc. Web Development with Node and Express, the picture of a black lark 
+and a white-winged lark,
+and related trade dress are trademarks of O’Reilly Media, Inc.
+
+Many of the designations used by manufacturers and sellers to distinguish their 
+products are claimed as
+trademarks. Where those designations appear in this book, and O’Reilly Media, 
+Inc. was aware of a trademark
+claim, the designations have been printed in caps or initial caps.
+
+While every precaution has been taken in the preparation of this book, the 
+publisher and author assume no
+responsibility for errors or omissions, or for damages resulting from the use 
+of the information contained
+herein.
+
+ISBN: 978-1-491-94930-6
+[LSI]
+
+
+This book is dedicated to my family:
+
+My father, Tom, who gave me a love of engineering; my mother, Ann, who gave me 
+a love
+of writing; and my sister, Meris, who has been a constant companion.
+
+
+
+Table of Contents
+
+Foreword.                                                                       
+                                           xiii
+
+Preface.                                                                        
+                                              xv
+
+1.  Introducing Express.                                                        
+                                        1
+
+The JavaScript Revolution                                                       
+                              1
+
+Introducing Express                                                             
+                                 2
+
+A Brief History of Express                                                      
+                              4
+
+Upgrading to Express 4.0                                                        
+                              4
+
+Node: A New Kind of Web Server                                                  
+                       5
+
+The Node Ecosystem                                                              
+                              6
+
+Licensing                                                                       
+                                       7
+
+2.  Getting Started with Node.                                                  
+                                     9
+
+Getting Node                                                                    
+                                    9
+
+Using the Terminal                                                              
+                                10
+
+Editors                                                                         
+                                       11
+
+npm                                                                             
+                                       12
+
+A Simple Web Server with Node                                                   
+                      13
+
+Hello World                                                                     
+                                14
+
+Event-Driven Programming                                                        
+                    14
+
+Routing                                                                         
+                                  15
+
+Serving Static Resources                                                        
+                           15
+
+Onward to Express                                                               
+                               17
+
+3.  Saving Time with Express.                                                   
+                                    19
+
+Scaffolding                                                                     
+                                     19
+
+The Meadowlark Travel Website                                                   
+                      20
+
+Initial Steps                                                                   
+                                      20
+
+Views and Layouts                                                               
+                            24
+
+
+Static Files and Views                                                          
+                             26
+
+Dynamic Content in Views                                                        
+                      27
+
+Conclusion                                                                      
+                                28
+
+4.  Tidying Up.                                                                 
+                                           29
+
+Best Practices                                                                  
+                                    29
+
+Version Control                                                                 
+                                 30
+
+How to Use Git with This Book                                                   
+                        30
+
+If You’re Following Along by Doing It Yourself                                  
+               31
+
+If You’re Following Along by Using the Official Repository                      
+        32
+
+npm Packages                                                                    
+                                 33
+
+Project Metadata                                                                
+                                 34
+
+Node Modules                                                                    
+                                34
+
+5.  Quality Assurance.                                                          
+                                       37
+
+QA: Is It Worth It?                                                             
+                                  38
+
+Logic Versus Presentation                                                       
+                            39
+
+The Types of Tests                                                              
+                                 39
+
+Overview of QA Techniques                                                       
+                         40
+
+Running Your Server                                                             
+                              40
+
+Page Testing                                                                    
+                                    41
+
+Cross-Page Testing                                                              
+                                44
+
+Logic Testing                                                                   
+                                    47
+
+Linting                                                                         
+                                       48
+
+Link Checking                                                                   
+                                 49
+
+Automating with Grunt                                                           
+                           49
+
+Continuous Integration (CI)                                                     
+                          52
+
+6.  The Request and Response Objects.                                           
+                              53
+
+The Parts of a URL                                                              
+                                53
+
+HTTP Request Methods                                                            
+                          54
+
+Request Headers                                                                 
+                                55
+
+Response Headers                                                                
+                               55
+
+Internet Media Types                                                            
+                              56
+
+Request Body                                                                    
+                                  56
+
+Parameters                                                                      
+                                    57
+
+The Request Object                                                              
+                               57
+
+The Response Object                                                             
+                             59
+
+Getting More Information                                                        
+                          60
+
+Boiling It Down                                                                 
+                                 61
+
+Rendering Content                                                               
+                           61
+
+Processing Forms                                                                
+                             63
+
+
+Providing an API                                                                
+                             64
+
+7.  Templating with Handlebars.                                                 
+                                 67
+
+There Are No Absolute Rules Except This One                                     
+              68
+
+Choosing a Template Engine                                                      
+                         69
+
+Jade: A Different Approach                                                      
+                           69
+
+Handlebars Basics                                                               
+                                71
+
+Comments                                                                        
+                               72
+
+Blocks                                                                          
+                                    72
+
+Server-Side Templates                                                           
+                           74
+
+Views and Layouts                                                               
+                            74
+
+Using Layouts (or Not) in Express                                               
+                     76
+
+Partials                                                                        
+                                    77
+
+Sections                                                                        
+                                   79
+
+Perfecting Your Templates                                                       
+                         80
+
+Client-Side Handlebars                                                          
+                          81
+
+Conclusion                                                                      
+                                   83
+
+8.  Form Handling.                                                              
+                                        85
+
+Sending Client Data to the Server                                               
+                         85
+
+HTML Forms                                                                      
+                                85
+
+Encoding                                                                        
+                                    86
+
+Different Approaches to Form Handling                                           
+                  87
+
+Form Handling with Express                                                      
+                         89
+
+Handling AJAX Forms                                                             
+                           90
+
+File Uploads                                                                    
+                                    92
+
+jQuery File Upload                                                              
+                                94
+
+9.  Cookies and Sessions.                                                       
+                                      99
+
+Externalizing Credentials                                                       
+                           100
+
+Cookies in Express                                                              
+                              101
+
+Examining Cookies                                                               
+                            103
+
+Sessions                                                                        
+                                    103
+
+Memory Stores                                                                   
+                           103
+
+Using Sessions                                                                  
+                             104
+
+Using Sessions to Implement Flash Messages                                      
+              105
+
+What to Use Sessions For                                                        
+                          106
+
+10.  Middleware.                                                                
+                                        109
+
+Common Middleware                                                               
+                        114
+
+
+Third-Party Middleware                                                          
+                         116
+
+11.  Sending Email.                                                             
+                                        117
+
+SMTP, MSAs, and MTAs                                                            
+                       117
+
+Receiving Email                                                                 
+                               118
+
+Email Headers                                                                   
+                                118
+
+Email Formats                                                                   
+                                119
+
+HTML Email                                                                      
+                               119
+
+Nodemailer                                                                      
+                                 120
+
+Sending Mail                                                                    
+                              120
+
+Sending Mail to Multiple Recipients                                             
+                  121
+
+Better Options for Bulk Email                                                   
+                        122
+
+Sending HTML Email                                                              
+                         122
+
+Images in HTML Email                                                            
+                     123
+
+Using Views to Send HTML Email                                                  
+               123
+
+Encapsulating Email Functionality                                               
+                  125
+
+Email as a Site Monitoring Tool                                                 
+                        127
+
+12.  Production Concerns.                                                       
+                                     129
+
+Execution Environments                                                          
+                         129
+
+Environment-Specific Configuration                                              
+                   130
+
+Scaling Your Website                                                            
+                             131
+
+Scaling Out with App Clusters                                                   
+                    132
+
+Handling Uncaught Exceptions                                                    
+                  135
+
+Scaling Out with Multiple Servers                                               
+                   138
+
+Monitoring Your Website                                                         
+                         139
+
+Third-Party Uptime Monitors                                                     
+                   139
+
+Application Failures                                                            
+                           140
+
+Stress Testing                                                                  
+                                  140
+
+13.  Persistence.                                                               
+                                          143
+
+Filesystem Persistence                                                          
+                             143
+
+Cloud Persistence                                                               
+                               145
+
+Database Persistence                                                            
+                             146
+
+A Note on Performance                                                           
+                      146
+
+Setting Up MongoDB                                                              
+                       147
+
+Mongoose                                                                        
+                              147
+
+Database Connections with Mongoose                                              
+             148
+
+Creating Schemas and Models                                                     
+                   149
+
+Seeding Initial Data                                                            
+                            150
+
+Retrieving Data                                                                 
+                             151
+
+Adding Data                                                                     
+                             152
+
+
+Using MongoDB for Session Storage                                               
+               154
+
+14.  Routing.                                                                   
+                                           157
+
+Routes and SEO                                                                  
+                              159
+
+Subdomains                                                                      
+                                159
+
+Route Handlers Are Middleware                                                   
+                    160
+
+Route Paths and Regular Expressions                                             
+                   162
+
+Route Parameters                                                                
+                              162
+
+Organizing Routes                                                               
+                             163
+
+Declaring Routes in a Module                                                    
+                       164
+
+Grouping Handlers Logically                                                     
+                       165
+
+Automatically Rendering Views                                                   
+                     166
+
+Other Approaches to Route Organization                                          
+               167
+
+15.  REST APIs and JSON.                                                        
+                                     169
+
+JSON and XML                                                                    
+                             170
+
+Our API                                                                         
+                                   170
+
+API Error Reporting                                                             
+                            171
+
+Cross-Origin Resource Sharing (CORS)                                            
+                172
+
+Our Data Store                                                                  
+                                173
+
+Our Tests                                                                       
+                                   173
+
+Using Express to Provide an API                                                 
+                      175
+
+Using a REST Plugin                                                             
+                            176
+
+Using a Subdomain                                                               
+                            178
+
+16.  Static Content.                                                            
+                                         181
+
+Performance Considerations                                                      
+                       182
+
+Future-Proofing Your Website                                                    
+                       182
+
+Static Mapping                                                                  
+                             183
+
+Static Resources in Views                                                       
+                        185
+
+Static Resources in CSS                                                         
+                         185
+
+Static Resources in Server-Side JavaScript                                      
+                    187
+
+Static Resources in Client-Side JavaScript                                      
+                    187
+
+Serving Static Resources                                                        
+                            189
+
+Changing Your Static Content                                                    
+                       190
+
+Bundling and Minification                                                       
+                         190
+
+Skipping Bundling and Minification in Development Mode                          
+ 193
+
+A Note on Third-Party Libraries                                                 
+                      195
+
+QA                                                                              
+                                      195
+
+Summary                                                                         
+                                 197
+
+17.  Implementing MVC in Express.                                               
+                               199
+
+
+Models                                                                          
+                                    200
+
+View Models                                                                     
+                                201
+
+Controllers                                                                     
+                                   203
+
+Conclusion                                                                      
+                                  205
+
+18.  Security.                                                                  
+                                            207
+
+HTTPS                                                                           
+                                  207
+
+Generating Your Own Certificate                                                 
+                  208
+
+Using a Free Certificate Authority                                              
+                    209
+
+Purchasing a Certificate                                                        
+                         210
+
+Enabling HTTPS for Your Express App                                             
+             212
+
+A Note on Ports                                                                 
+                            213
+
+HTTPS and Proxies                                                               
+                        214
+
+Cross-Site Request Forgery                                                      
+                         215
+
+Authentication                                                                  
+                                216
+
+Authentication Versus Authorization                                             
+                216
+
+The Problem with Passwords                                                      
+                   217
+
+Third-Party Authentication                                                      
+                      217
+
+Storing Users in Your Database                                                  
+                    218
+
+Authentication Versus Registration and the User Experience                      
+    219
+
+Passport                                                                        
+                                 220
+
+Role-Based Authorization                                                        
+                      229
+
+Adding Additional Authentication Providers                                      
+           231
+
+Conclusion                                                                      
+                                  232
+
+19.  Integrating with Third-Party APIs.                                         
+                                233
+
+Social Media                                                                    
+                                  233
+
+Social Media Plugins and Site Performance                                       
+             233
+
+Searching for Tweets                                                            
+                          234
+
+Rendering Tweets                                                                
+                          237
+
+Geocoding                                                                       
+                                 241
+
+Geocoding with Google                                                           
+                      241
+
+Geocoding Your Data                                                             
+                        242
+
+Displaying a Map                                                                
+                           245
+
+Improving Client-Side Performance                                               
+                247
+
+Weather Data                                                                    
+                                248
+
+Conclusion                                                                      
+                                  249
+
+20.  Debugging.                                                                 
+                                        251
+
+The First Principle of Debugging                                                
+                       251
+
+Take Advantage of REPL and the Console                                          
+               252
+
+Using Node’s Built-in Debugger                                                  
+                      253
+
+
+Node Inspector                                                                  
+                               253
+
+Debugging Asynchronous Functions                                                
+                 257
+
+Debugging Express                                                               
+                             257
+
+21.  Going Live.                                                                
+                                          261
+
+Domain Registration and Hosting                                                 
+                    261
+
+Domain Name System                                                              
+                     262
+
+Security                                                                        
+                                  262
+
+Top-Level Domains                                                               
+                         263
+
+Subdomains                                                                      
+                             264
+
+Nameservers                                                                     
+                             265
+
+Hosting                                                                         
+                                 266
+
+Deployment                                                                      
+                             269
+
+Conclusion                                                                      
+                                  272
+
+22.  Maintenance.                                                               
+                                       273
+
+The Principles of Maintenance                                                   
+                       273
+
+Have a Longevity Plan                                                           
+                         273
+
+Use Source Control                                                              
+                          275
+
+Use an Issue Tracker                                                            
+                           275
+
+Exercise Good Hygiene                                                           
+                       275
+
+Don’t Procrastinate                                                             
+                           276
+
+Do Routine QA Checks                                                            
+                      276
+
+Monitor Analytics                                                               
+                           277
+
+Optimize Performance                                                            
+                       277
+
+Prioritize Lead Tracking                                                        
+                         277
+
+Prevent “Invisible” Failures                                                    
+                        279
+
+Code Reuse and Refactoring                                                      
+                        279
+
+Private npm Registry                                                            
+                          280
+
+Middleware                                                                      
+                              281
+
+Conclusion                                                                      
+                                  283
+
+23.  Additional Resources.                                                      
+                                     285
+
+Online Documentation                                                            
+                         285
+
+Periodicals                                                                     
+                                   286
+
+Stack Overflow                                                                  
+                                286
+
+Contributing to Express                                                         
+                           288
+
+Conclusion                                                                      
+                                  290
+
+Index.                                                                          
+                                            291
+
+
+
+Foreword
+
+The combination of JavaScript, Node, and Express is an ideal choice for web 
+teams that
+want a powerful, quick-to-deploy technology stack that is widely respected in 
+the de‐
+velopment community and large enterprises alike.
+
+Building great web applications and finding great web developers isn’t easy. 
+Great apps
+require great functionality, user experience, and business impact: delivered, 
+deployed,
+and supported quickly and cost effectively. The lower total cost of ownership 
+and faster
+time-to-market that Express provides is critical in the business world. If you 
+are a web
+developer,    you have to use at least some JavaScript. But you also have the 
+option of using
+a            lot of it. In this book, Ethan Brown shows you that you can use a 
+lot of it, and it’s not
+that hard thanks to Node and Express.
+
+Node and Express are like machine guns that deliver upon the silver-bullet 
+promise of
+JavaScript.
+
+JavaScript is the most universally accepted language for client-side scripting. 
+Unlike
+Flash, it’s supported by all major web browsers. It’s the fundamental 
+technology behind
+many of the attractive animations and transitions you see on the Web. In fact, 
+it’s almost
+impossible  not  to  utilize  JavaScript  if  you  want  to  achieve  modern  
+client-side
+functionality.
+
+One problem with JavaScript is that it has always been vulnerable to sloppy 
+program‐
+ming. The Node ecosystem is changing that by providing frameworks, libraries, 
+and
+tools that speed up development and encourage good coding habits. This helps us 
+bring
+better apps to market faster.
+
+We now have a great programming language that is supported by large 
+enterprises, is
+easy-to-use, is designed for modern browsers, and is supplemented with great 
+frame‐
+works and libraries on both client-side and server-side. I call that 
+revolutionary.
+
+—Steve Rosenbaum
+
+President and CEO, Pop Art, Inc.
+
+
+
+Preface
+
+Who This Book Is For
+
+Clearly, this book is for programmers who want to create web applications 
+(traditional
+websites, RESTful APIs, or anything in between) using JavaScript, Node, and 
+Express.
+One    of the exciting aspects of Node development is that it has attracted a 
+whole new
+audience of programmers. The accessibility and flexibility of JavaScript has 
+attracted
+self-taught programmers from all over the world. At no time in the history of 
+computer
+science has programming been so accessible. The number and quality of online 
+resour‐
+ces  for learning to program (and getting help when you get stuck) is truly 
+astonishing
+and inspiring. So to those new (possibly self-taught) programmers, I welcome 
+you.
+
+Then, of course, there are the programmers like me, who have been around for a 
+while.
+Like many programmers of my era, I started off with assembler and BASIC, and 
+went
+through Pascal, C++, Perl, Java, PHP, Ruby, C, C#, and JavaScript. At 
+university, I was
+exposed to more niche languages such as ML, LISP, and PROLOG. Many of these lan‐
+guages are near and dear to my heart, but in none of these languages do I see 
+so much
+promise as I do in JavaScript. So I am also writing this book for programmers 
+like myself,
+who have a lot of experience, and perhaps a more philosophical outlook on 
+specific
+technologies.
+
+No experience with Node is necessary, but you should have some experience with 
+Java‐
+Script. If you’re new to programming, I recommend Codecademy. If you’re an 
+experi‐
+enced  programmer,  I  recommend  Douglas  Crockford’s  JavaScript:  The  Good  
+Parts
+(O’Reilly). The examples in this book can be used with any system that Node 
+works on
+(which covers Windows, OS X, and Linux). The examples are geared toward command-
+line (terminal) users, so you should have some familiarity with your system’s 
+terminal.
+
+Most important, this book is for programmers who are excited. Excited about the 
+future
+of the Internet, and want to be part of it. Excited about learning new things, 
+new tech‐
+niques, and new ways of looking at web development. If, dear reader, you are 
+not excited,
+I   hope you will be by the time you reach the end of this book….
+
+
+How This Book Is Organized
+
+Chapters 1 and 2 will introduce you to Node and Express and some of the tools 
+you’ll
+be using throughout the book. In Chapters 3 and 4, you start using Express and 
+build
+the skeleton of a sample website that will be used as a running example 
+throughout the
+rest of the book.
+
+Chapter 5 discusses testing and QA, and Chapter 6 covers some of Node’s more im‐
+portant constructs and how they are extended and used by Express. Chapter 7 
+covers
+templating (using Handlebars), which lays the foundation of building useful 
+websites
+with Express. Chapters 8 and 9 cover cookies, sessions, and form handlers, 
+rounding
+out the things you need to know to build basic functional websites with 
+Express.
+
+Chapter 10 delves into “middleware,” a concept central to Connect (one of 
+Express’s
+major components). Chapter 11 explains how to use middleware to send email from
+the server and discusses security and layout issues inherent to email.
+
+Chapter 12 offers a preview into production concerns. Even though, at this 
+stage in the
+book, you don’t have all the information you need to build a production-ready 
+website,
+thinking about production now can save you from major headaches in the future.
+
+Chapter 13 is about persistence, with a focus on MongoDB (one of the leading 
+document
+databases).
+
+Chapter 14 gets into the details of routing with Express (how URLs are mapped to
+content), and Chapter 15 takes a diversion into writing APIs with Express. 
+Chapter 16
+covers the details of serving static content, with a focus on maximizing 
+performance.
+Chapter 17 reviews the popular model-view-controller (MVC) paradigm, and how it
+fits into Express.
+
+Chapter 18 discusses security: how to build authentication and authorization 
+into your
+app (with a focus on using a third-party authentication provider), as well as 
+how to run
+your site over HTTPS.
+
+Chapter 19 explains how to integrate with third-party services. Examples used 
+are Twit‐
+ter, Google Maps, and Weather Underground.
+
+Chapters 20 and 21 get your ready for the big day: your site launch. They cover 
+debug‐
+ging, so you can root out any defects before launch, and the process of going 
+live.
+Chapter 22 talks about the next important (and oft-neglected) phase: 
+maintenance.
+
+The book concludes with Chapter 23, which points you to additional resources, 
+should
+you want to further your education about Node and Express, and where you can go 
+to
+get help.
+
+xvi    |    Preface
+
+
+Example Website
+
+Starting in Chapter 3, a running example will be used throughout the book: the 
+Mead‐
+owlark Travel website. Just having gotten back from a trip to Lisbon, I have 
+travel on
+my mind, so the example website I have chosen is for a fictional travel company 
+in my
+home state of Oregon (the Western Meadowlark is the state bird of Oregon). 
+Meadow‐
+lark Travel allows travelers to connect to local “amateur tour guides,” and 
+partners with
+companies offering bike and scooter rentals and local tours. In addition, it 
+maintains a
+database of local attractions, complete with history and location-aware 
+services.
+
+Like any pedagogical example, the Meadowlark Travel website is contrived, but 
+it is an
+example that covers many of the challenges facing real-world websites: 
+third-party
+component integration, geolocation, ecommerce, performance, and security.
+
+As the focus on this book is backend infrastructure, the example website will 
+not be
+complete; it merely serves as a fictional example of a real-world website to 
+provide depth
+and context to the examples. Presumably, you are working on your own website, 
+and
+you can use the Meadowlark Travel example as a template for it.
+
+Conventions Used in This Book
+
+The following typographical conventions are used in this book:
+
+Italic
+
+Indicates new terms, URLs, email addresses, filenames, and file extensions.
+
+Constant width
+
+Used for program listings, as well as within paragraphs to refer to program 
+elements
+such as variable or function names, databases, data types, environment 
+variables,
+statements, and keywords.
+
+Constant width bold
+
+Shows commands or other text that should be typed literally by the user.
+
+Constant width italic
+
+Shows text that should be replaced with user-supplied values or by values deter‐
+mined by context.
+
+This element signifies a tip or suggestion.
+
+
+This element signifies a general note.
+
+This element indicates a warning or caution.
+
+Using Code Examples
+
+Supplemental material (code examples, exercises, etc.) is available for 
+download at
+
+https://github.com/EthanRBrown/web-development-with-node-and-express.
+
+This book is here to help you get your job done. In general, if example code is 
+offered
+with this book, you may use it in your programs and documentation. You do not 
+need
+to contact us for permission unless you’re reproducing a significant portion of 
+the code.
+For example, writing a program that uses several chunks of code from this book 
+does
+not require permission. Selling or distributing a CD-ROM of examples from 
+O’Reilly
+books does require permission. Answering a question by citing this book and 
+quoting
+example code does not require permission. Incorporating a significant amount of 
+ex‐
+ample code from this book into your product’s documentation does require 
+permission.
+
+We appreciate, but do not require, attribution. An attribution usually includes 
+the title,
+author, publisher, and ISBN. For example: “Web Development with Node and Express
+by Ethan Brown (O’Reilly). Copyright 2014 Ethan Brown, 978-1-491-94930-6.”
+
+If you feel your use of code examples falls outside fair use or the permission 
+given above,
+feel free to contact us at permissions@oreilly.com.
+
+Safari® Books Online
+
+Safari  Books  Online  is  an  on-demand  digital  library  that
+delivers expert content in both book and video form from
+the world’s leading authors in technology and business.
+
+Technology professionals, software developers, web designers, and business and 
+crea‐
+tive professionals use Safari Books Online as their primary resource for 
+research, prob‐
+lem solving, learning, and certification training.
+
+Safari Books Online offers a range of product mixes and pricing programs for 
+organi‐
+zations, government agencies, and individuals. Subscribers have access to 
+thousands of
+books, training videos, and prepublication manuscripts in one fully searchable 
+database
+
+
+from publishers like O’Reilly Media, Prentice Hall Professional, Addison-Wesley 
+Pro‐
+fessional, Microsoft Press, Sams, Que, Peachpit Press, Focal Press, Cisco 
+Press, John
+Wiley   & Sons, Syngress, Morgan Kaufmann, IBM Redbooks, Packt, Adobe Press, FT
+Press, Apress, Manning, New Riders, McGraw-Hill, Jones & Bartlett, Course 
+Technol‐
+ogy, and dozens more. For more information about Safari Books Online, please 
+visit us
+online.
+
+How to Contact Us
+
+Please address comments and questions concerning this book to the publisher:
+
+O’Reilly Media, Inc.
+
+1005 Gravenstein Highway North
+Sebastopol, CA 95472
+
+800-998-9938 (in the United States or Canada)
+707-829-0515 (international or local)
+
+707-829-0104 (fax)
+
+We have a web page for this book, where we list errata, examples, and any 
+additional
+information. You can access this page at http://bit.ly/web_dev_node_express.
+
+To  comment  or  ask  technical  questions  about  this  book,  send  email  to 
+ bookques
+tions@oreilly.com.
+
+For more information about our books, courses, conferences, and news, see our 
+website
+at http://www.oreilly.com.
+
+Find us on Facebook: http://facebook.com/oreilly
+
+Follow us on Twitter: http://twitter.com/oreillymedia
+
+Watch us on YouTube: http://www.youtube.com/oreillymedia
+
+Acknowledgments
+
+So many people in my life have played a part in making this book a reality: it 
+would not
+have been possible without the influence of all the people who have touched my 
+life and
+made me who I am today.
+
+I would like to start out by thanking everyone at Pop Art: not only has my time 
+at Pop
+Art given me a renewed passion for engineering, but I have learned so much from
+everyone there, and without their support, this book would not exist. I am 
+grateful to
+Steve Rosenbaum for creating an inspiring place to work, and to Del Olds for 
+bringing
+me on board, making me feel welcome, and being an honorable leader. Thanks to 
+Paul
+Inman for his unwavering support and inspiring attitude toward engineering, and 
+Tony
+Alferez for his warm support and for helping me carve out time for writing 
+without
+
+
+impacting Pop Art. Finally, thanks to all the great engineers I have worked 
+with, who
+keep me on my toes: John Skelton, Dylan Hallstrom, Greg Yung, Quinn Michael, and
+CJ Stritzel.
+
+Zach Mason, thank you for being an inspiration to me. This book may be no The 
+Lost
+Books of the Odyssey, but it is mine, and I don’t know if I would have been so 
+bold without
+your example.
+
+I owe everything to my family. I couldn’t have wished for a better, more loving 
+education
+than the one they gave me, and I see their exceptional parenting reflected in 
+my sister
+too.
+
+Many thanks to Simon St. Laurent for giving me this opportunity, and to Brian 
+Anderson
+for his steady and encouraging editing. Thanks to everyone at O’Reilly for 
+their dedi‐
+cation and passion. Thanks to Jennifer Pierce, Mike Wilson, Ray Villalobos, and 
+Eric
+Elliot for their thorough and constructive technical reviews.
+
+Katy Roberts and Hanna Nelson provided invaluable feedback and advice on my 
+“over
+the transom” proposal that made this book possible. Thank you both so much! 
+Thanks
+to Chris Cowell-Shah for his excellent feedback on the QA chapter.
+
+Lastly, thanks to my dear friends, without whom I surely would have gone 
+insane. Byron
+Clayton, Mark Booth, Katy Roberts, and Sarah Lewis, you are the best group of 
+friends
+a      man could ask for. And thanks to Vickey and Judy, just for being who 
+they are. I love
+you all.
+
+
+CHAPTER 1
+
+Introducing Express
+
+The JavaScript Revolution
+
+Before I introduce the main subject of this book, it is important to provide a 
+little back‐
+ground and historical context, and that means talking about JavaScript and 
+Node.
+
+The age of JavaScript is truly upon us. From its humble beginnings as a 
+client-side
+scripting language, not only has it become completely ubiquitous on the client 
+side, but
+its      use as a server-side language has finally taken off too, thanks to 
+Node.
+
+The promise of an all-JavaScript technology stack is clear: no more context 
+switching!
+No longer do you have to switch mental gears from JavaScript to PHP, C#, Ruby, 
+or
+Python (or any other server-side language). Furthermore, it empowers frontend 
+engi‐
+neers to make the jump to server-side programming. This is not to say that 
+server-side
+programming is strictly about the language: there’s still a lot to learn. With 
+JavaScript,
+though,        at least the language won’t be a barrier.
+
+This book is for all those who see the promise of the JavaScript technology 
+stack. Perhaps
+you are a frontend engineer looking to extend your experience into backend 
+develop‐
+ment. Perhaps you’re an experienced backend developer like myself who is 
+looking to
+JavaScript as a viable alternative to entrenched server-side languages.
+
+If you’ve been a software engineer for as long as I have, you have seen many 
+languages,
+frameworks, and APIs come into vogue. Some have taken off, and some have faded 
+into
+obsolescence. You probably take pride in your ability to rapidly learn new 
+languages,
+new  systems. Every new language you come across feels a little more familiar: 
+you
+recognize a bit here from a language you learned in college, a bit there from 
+that job
+you     had a few years ago. It feels good to have that kind of perspective, 
+certainly, but it’s
+also wearying. Sometimes you want to just get something done, without having to 
+learn
+a whole new technology or dust off skills you haven’t used in months or years.
+
+
+JavaScript may seem, at first, an unlikely champion. I sympathize, believe me. 
+If you
+told me three years ago that I would not only come to think of JavaScript as my 
+language
+of choice, but also write a book about it, I would have told you you were 
+crazy. I had all
+the usual prejudices against JavaScript: I thought it was a “toy” language. 
+Something for
+amateurs and dilettantes to mangle and abuse. To be fair, JavaScript did lower 
+the bar
+for amateurs, and there was a lot of questionable JavaScript out there, which 
+did not
+help the language’s reputation. To turn a popular saying on its head, “Hate the 
+player,
+not the game.”
+
+It is unfortunate that people suffer this prejudice against JavaScript: it has 
+prevented
+people from discovering how powerful, flexible, and elegant the language is. 
+Many peo‐
+ple are just now starting to take JavaScript seriously, even though the 
+language as we
+know it now has been around since 1996 (although many of its more attractive 
+features
+were added in 2005).
+
+By picking up this book, you are probably free of that prejudice: either 
+because, like me,
+you have gotten past it, or because you never had it in the first place. In 
+either case, you
+are fortunate, and I look forward to introducing you to Express, a technology 
+made
+possible by a delightful and surprising language.
+
+In  2009,  years  after  people  had  started  to  realize  the  power  and  
+expressiveness  of
+JavaScript as a browser scripting language, Ryan Dahl saw JavaScript’s 
+potential as a
+server-side language, and Node was born. This was a fertile time for Internet 
+technology.
+Ruby (and Ruby on Rails) took some great ideas from academic computer science,
+combined them with some new ideas of its own, and showed the world a quicker way
+to build websites and web applications. Microsoft, in a valiant effort to 
+become relevant
+in the Internet age, did amazing things with .NET and learned not only from 
+Ruby and
+JavaScript, but also from Java’s mistakes, while borrowing heavily from the 
+halls of
+academia.
+
+It is an exciting time to be involved in Internet technology. Everywhere, there 
+are amaz‐
+ing new ideas (or amazing old ideas revitalized). The spirit of innovation and 
+excitement
+is greater now than it has been in many years.
+
+Introducing Express
+
+The Express website describes Express as “a minimal and flexible node.js web 
+applica‐
+tion framework, providing a robust set of features for building single and 
+multipage
+and hybrid web applications.” What does that really mean, though? Let’s break 
+that
+description down:
+
+Minimal
+
+This is one of the most appealing aspects of Express. Many times, framework de‐
+velopers forget that usually “less is more.” The Express philosophy is to 
+provide the
+minimal layer between your brain and the server. That doesn’t mean that it’s 
+not
+
+
+robust, or that it doesn’t have enough useful features. It means that it gets 
+in your
+way less, allowing you full expression of your ideas, while at the same time 
+providing
+something useful.
+
+Flexible
+
+Another key aspect of the Express philosophy is that Express is extensible. 
+Express
+provides you a very minimal framework, and you can add in different parts of
+Express functionality as needed, replacing whatever doesn’t meet your needs. 
+This
+is         a breath of fresh air. So many frameworks give you everything, 
+leaving you with
+a bloated, mysterious, and complex project before you’ve even written a single 
+line
+of code. Very often, the first task is to waste time carving off unneeded 
+functionality,
+or replacing the functionality that doesn’t meet requirements. Express takes the
+opposite approach, allowing you to add what you need when you need it.
+
+Web application framework
+
+Here’s where semantics starts to get tricky. What’s a web application? Does that
+mean you can’t build a website or web pages with Express? No, a website is a web
+application, and a web page is a web application. But a web application can be 
+more:
+it        can provide functionality to other web applications (among other 
+things). In
+general, “app” is used to signify something that has functionality: it’s not 
+just a static
+collection of content (though that is a very simple example of a web app). While
+there      is currently a distinction between an “app” (something that runs 
+natively on
+your device) and a “web page” (something that is served to your device over the
+network), that distinction is getting blurrier, thanks to projects like 
+PhoneGap, as
+well      as Microsoft’s move to allow HTML5 applications on the desktop, as if 
+they
+were native applications. It’s easy to imagine that in a few years, there won’t 
+be a
+distinction between an app and a website.
+
+Single-page web applications
+
+Single-page web applications are a relatively new idea. Instead of a website 
+requiring
+a network request every time the user navigates to a different page, a 
+single-page
+web application downloads the entire site (or a good chunk of it) to the 
+client’s
+browser. After that initial download, navigation is faster because there is 
+little or no
+communication with the server. Single-page application development is 
+facilitated
+by                               the use of popular frameworks such as Angular 
+or Ember, which Express is happy
+to serve up.
+
+Multipage and hybrid web applications
+
+Multipage web applications are a more traditional approach to websites. Each 
+page
+on a website is provided by a separate request to the server. Just because this 
+ap‐
+proach is more traditional does not mean it is not without merit or that 
+single-page
+applications are somehow better. There are simply more options now, and you can
+decide what parts of your content should be delivered as a single-page app, and
+
+
+what parts should be delivered via individual requests. “Hybrid” describes 
+sites that
+utilize both of these approaches.
+
+If you’re still feeling confused about what Express actually is, don’t worry: 
+sometimes
+it’s much easier to just start using something to understand what it is, and 
+this book will
+get you started building web applications with Express.
+
+A Brief History of Express
+
+Express’s creator, TJ Holowaychuk, describes Express as a web framework 
+inspired by
+Sinatra, which is a web framework based on Ruby. It is no surprise that Express 
+borrows
+from a framework built on Ruby: Ruby spawned a wealth of great approaches to web
+development,  aimed  at  making  web  development  faster,  more  efficient,  
+and  more
+maintainable.
+
+As much as Express was inspired by Sinatra, it is also deeply intertwined with 
+Connect,
+a “plugin” library for Node. Connect coined the term “middleware” to describe 
+pluggable
+Node modules that can handle web requests to varying degrees. Up until version 
+4.0,
+Express bundled Connect; in version 4.0, Connect (and all middleware except 
+static)
+was removed to allow these middleware to be updated independently.
+
+Express underwent a fairly substantial rewrite between 2.x and 3.0,
+then again between 3.x and 4.0. This book will focus on version 4.0.
+
+Upgrading to Express 4.0
+
+If you already have some experience with Express 3.0, you’ll be happy to learn 
+that
+upgrading to Express 4.0 is pretty painless. If you’re new to Express, you can 
+skip this
+section. Here are the high points for those with Express 3.0 experience:
+
+•  Connect has been removed from Express, so with the exception of the static
+middleware, you will need to install the appropriate packages (namely, connect).
+At the same time, Connect has been moving some of its middleware into their own
+packages, so you might have to do some searching on npm to figure out where your
+middleware went.
+
+•  body-parser is now its own package, which no longer includes the multipart
+middleware, closing a major security hole. It’s now safe to use the body-parser
+middleware.
+
+•  You no longer have to link the Express router into your application. So you 
+should
+remove app.use(app.router) from your existing Express 3.0 apps.
+
+
+•  app.configure was removed; simply replace calls to this method by examining
+
+app.get(env) (using either a switch statement or if statements).
+
+For more details, see the official migration guide.
+
+Express is an open source project and continues to be primarily developed and 
+main‐
+tained by TJ Holowaychuk.
+
+Node: A New Kind of Web Server
+
+In a way, Node has a lot in common with other popular web servers, like 
+Microsoft’s
+Internet Information Services (IIS) or Apache. What is more interesting, 
+though, is how
+it differs, so let’s start there.
+
+Much  like  Express,  Node’s  approach  to  webservers  is  very  minimal.  
+Unlike  IIS  or
+Apache, which a person can spend many years mastering, Node is very easy to set 
+up
+and configure. That is not to say that tuning Node servers for maximum 
+performance
+in a production setting is a trivial matter: it’s just that the configuration 
+options are
+simpler and more straightforward.
+
+Another major difference between Node and more traditional web servers is that 
+Node
+is single threaded. At first blush, this may seem like a step backward. As it 
+turns out, it
+is a stroke of genius. Single threading vastly simplifies the business of 
+writing web apps,
+and if you need the performance of a multithreaded app, you can simply spin up 
+more
+instances of Node, and you will effectively have the performance benefits of 
+multi‐
+threading. The astute reader is probably thinking this sounds like smoke and 
+mirrors.
+After      all, isn’t multithreading through server parallelism (as opposed to 
+app parallelism)
+simply moving the complexity around, not eliminating it? Perhaps, but in my 
+experi‐
+ence, it has moved the complexity to exactly where it should be. Furthermore, 
+with the
+growing popularity of cloud computing and treating servers as generic 
+commodities,
+this approach makes a lot more sense. IIS and Apache are powerful indeed, and 
+they
+are designed to squeeze the very last drop of performance out of today’s 
+powerful hard‐
+ware. That comes at a cost, though: they require considerable expertise to set 
+up and
+tune to achieve that performance.
+
+In terms of the way apps are written, Node apps have more in common with PHP or
+Ruby apps than .NET or Java apps. While the JavaScript engine that Node uses 
+(Google’s
+V8) does compile JavaScript to native machine code (much like C or C++), it 
+does so
+transparently,1  so from the user’s perspective, it behaves like a purely 
+interpreted lan‐
+guage.              Not having a separate compile step reduces maintenance and 
+deployment hassles:
+all you have to do is update a JavaScript file, and your changes will 
+automatically be
+available.
+
+1.  Often called “Just in Time” (JIT) compilation.
+
+
+Another compelling benefit of Node apps is that Node is incredibly platform 
+inde‐
+pendent. It’s not the first or only platform-independent server technology, but 
+platform
+independence is really more of a spectrum than a binary proposition. For 
+example, you
+can        run .NET apps on a Linux server thanks to Mono, but it’s a painful 
+endeavor.
+Likewise, you can run PHP apps on a Windows server, but it is not generally as 
+easy to
+set        up as it is on a Linux machine. Node, on the other hand, is a snap 
+to set up on all the
+major operating systems (Windows, OS X, and Linux) and enables easy 
+collaboration.
+Among website design teams, a mix of PCs and Macs is quite common. Certain plat‐
+forms, like .NET, introduce challenges for frontend developers and designers, 
+who often
+use Macs, which has a huge impact on collaboration and efficiency. The idea of 
+being
+able to spin up a functioning server on any operating system in a matter of 
+minutes (or
+even seconds!) is a dream come true.
+
+The Node Ecosystem
+
+Node, of course, lies at the heart of the stack. It’s the software that enables 
+JavaScript to
+run on the server, uncoupled from a browser, which in turn allows frameworks 
+written
+in JavaScript (like Express) to be used. Another important component is the 
+database,
+which will be covered in more depth in Chapter 13. All but the simplest of web 
+apps
+will need a database, and there are databases that are more at home in the Node 
+eco‐
+system than others.
+
+It is unsurprising that database interfaces are available for all the major 
+relational da‐
+tabases (MySQL, MariaDB, PostgreSQL, Oracle, SQL Server): it would be foolish to
+neglect those established behemoths. However, the advent of Node development has
+revitalized a new approach to database storage: the so-called “NoSQL” 
+databases. It’s not
+always helpful to define something as what it’s not, so we’ll add that these 
+NoSQL da‐
+tabases might be more properly called “document databases” or “key/value pair 
+data‐
+bases.” They provide a conceptually simpler approach to data storage. There are 
+many,
+but MongoDB is one of the frontrunners, and the one we will be using in this 
+book.
+
+Because building a functional website depends on multiple pieces of technology, 
+acro‐
+nyms have been spawned to describe the “stack” that a website is built on. For 
+example,
+the combination of Linux, Apache, MySQL, and PHP is referred to as the LAMP 
+stack.
+Valeri Karpov, an engineer at MongoDB, coined the acronym MEAN: Mongo, Express,
+Angular, and Node. While it’s certainly catchy, it is limiting: there are so 
+many choices
+for databases and application frameworks that “MEAN” doesn’t capture the 
+diversity of
+the ecosystem (it also leaves out what I believe is an important component: 
+templating
+engines).
+
+Coining an inclusive acronym is an interesting exercise. The indispensable 
+component,
+of course, is Node. While there are other server-side JavaScript containers, 
+Node is
+emerging as the dominant one. Express, also, is not the only web app framework 
+avail‐
+able, though it is close to Node in its dominance. The two other components 
+that are
+
+
+usually essential for web app development are a database server and a 
+templating engine
+(a templating engine provides what PHP, JSP, or Razor provides naturally: the 
+ability to
+seamlessly combine code and markup output). For these last two components, there
+aren’t     as many clear frontrunners, and this is where I believe it’s a 
+disservice to be re‐
+strictive.
+
+What ties all these technologies together is JavaScript, so in an effort to be 
+inclusive, I
+will be referring to the “JavaScript stack.” For the purposes of this book, 
+that means
+Node, Express, and MongoDB.
+
+Licensing
+
+When developing Node applications, you may find yourself having to pay more 
+atten‐
+tion to licensing than you ever have before (I certainly have). One of the 
+beauties of the
+Node ecosystem is the vast array of packages available to you. However, each of 
+those
+packages carries its own licensing, and worse, each package may depend on other 
+pack‐
+ages, meaning that understanding the licensing of the various parts of the app 
+you’ve
+written can be tricky.
+
+However, there is some good news. One of the most popular licenses for Node 
+packages
+is the MIT license, which is painlessly permissive, allowing you to do almost 
+anything
+you want, including use the package in closed source software. However, you 
+shouldn’t
+just assume every package you use is MIT licensed.
+
+There are several packages available in npm that will try to figure out
+the  licenses  of  each  dependency  in  your  project.  Search  npm  for
+license-sniffer or license-spelunker.
+
+While MIT is the most common license you will encounter, you may also see the 
+fol‐
+lowing licenses:
+
+GNU General Public License (GPL)
+
+The GPL is a very popular open source license that has been cleverly crafted to 
+keep
+software free. That means if you use GPL-licensed code in your project, your 
+project
+must also be GPL licensed. Naturally, this means your project can’t be closed 
+source.
+
+Apache 2.0
+
+This license, like MIT, allows you to use a different license for your project, 
+includ‐
+ing a closed source license. You must, however, include notice of components 
+that
+use the Apache 2.0 license.
+
+
+Berkeley Software Distribution (BSD)
+
+Similar to Apache, this license allows you to use whatever license you wish for 
+your
+project, as long as you include notice of the BSD-licensed components.
+
+Software  is  sometimes  dual  licensed  (licensed  under  two  different
+licenses). A very common reason for doing this is to allow the soft‐
+ware   to be used in both GPL projects and projects with more per‐
+missive licensing. (For a component to be used in GPL software, the
+component must be GPL licensed.) This is a licensing scheme I often
+employ with my own projects: dual licensing with GPL and MIT.
+
+Lastly, if you find yourself writing your own packages, you should be a good 
+citizen and
+pick a license for your package, and document it correctly. There is nothing 
+more frus‐
+trating to a developer than using someone’s package and having to dig around in 
+the
+source to determine the licensing or, worse, find that it isn’t licensed at 
+all.
+
+
+CHAPTER 2
+
+Getting Started with Node
+
+If you don’t have any experience with Node, this chapter is for you. 
+Understanding
+Express and its usefulness requires a basic understanding of Node. If you 
+already have
+experience building web apps with Node, feel free to skip this chapter. In this 
+chapter,
+we        will be building a very minimal web server with Node; in the next 
+chapter, we will
+see how to do the same thing with Express.
+
+Getting Node
+
+Getting Node installed on your system couldn’t be easier. The Node team has 
+gone to
+great lengths to make sure the installation process is simple and 
+straightforward on all
+major platforms.
+
+The installation is so simple, as a matter of fact, that it can be summed up in 
+three simple
+steps:
+
+1.  Go to the Node home page.
+
+2.  Click the big green button that says INSTALL.
+
+3.  Follow instructions.
+
+For Windows and OS X, an installer will be downloaded that walks you through the
+process. For Linux, you will probably be up and running more quickly if you use 
+a
+package manager.
+
+If you’re a Linux user and you do want to use a package manager,
+make sure you follow the instructions in the aforementioned web
+page.  Many  Linux  distributions  will  install  an  extremely  old  ver‐
+sion of Node if you don’t add the appropriate package repository.
+
+
+You can also download a standalone installer, which can be helpful if you are 
+distributing
+Node to your organization.
+
+If you have trouble building Node, or for some reason you would like to build 
+Node
+from scratch, please refer to the official installation instructions.
+
+Using the Terminal
+
+I’m an unrepentant fan of the power and productivity of using a terminal (also 
+called a
+“console” or “command prompt”). Throughout this book, all examples will assume
+you’re using a terminal. If you’re not friends with your terminal, I highly 
+recommend
+you spend some time familiarizing yourself with your terminal of choice. Many 
+of the
+utilities in this book have corresponding GUI interfaces, so if you’re dead set 
+against
+using a terminal, you have options, but you will have to find your own way.
+
+If you’re on OS X or Linux, you have a wealth of venerable shells (the terminal 
+command
+interpreter) to choose from. The most popular by far is bash, though zsh has 
+its adher‐
+ents.      The main reason I gravitate toward bash (other than long 
+familiarity) is ubiquity.
+Sit down in front of any Unix-based computer, and 99% of the time, the default 
+shell
+will be bash.
+
+If you’re a Windows user, things aren’t quite so rosy. Microsoft has never been 
+partic‐
+ularly interested in providing a pleasant terminal experience, so you’ll have 
+to do a little
+more work. Git helpfully includes a “Git bash” shell, which provides a 
+Unix-like terminal
+experience (it only has a small subset of the normally available Unix 
+command-line
+utilities, but it’s a useful subset). While Git bash provides you with a 
+minimal bash shell,
+it’s   still using the built-in Windows console application, which leads to an 
+exercise in
+frustration (even simple functionaity like resizing a console window, selecting 
+text, cut‐
+ting,     and pasting is unintuitive and awkward). For this reason, I recommend 
+installing
+a more sophisticated terminal such as Console2 or ConEmu. For Windows power 
+users
+
+—especially for .NET developers or for hardcore Windows systems or network 
+admin‐
+istrators—there is another option: Microsoft’s own PowerShell. PowerShell lives 
+up to
+its name: people do remarkable things with it, and a skilled PowerShell user 
+could give
+a Unix command-line guru a run for their money. However, if you move between OS
+X/Linux and Windows, I still recommend sticking with Git bash for the 
+consistency it
+provides.
+
+Another option, if you’re a Windows user, is virtualization. With the power and 
+archi‐
+tecture of modern computers, the performance of virtual machines (VMs) is 
+practically
+indistinguishable from actual machines. I’ve had great luck with Oracle’s free 
+Virtual‐
+Box,                   and Windows 8 offers VM support built in. With 
+cloud-based file storage, such as
+Dropbox, and the easy bridging of VM storage to host storage, virtualizing is 
+looking
+more attractive all the time. Instead of using Git bash as a bandage on 
+Windows’s
+lackluster console support, consider using a Linux VM for development. If you 
+find the
+
+
+UI isn’t as smooth as you would like, you could use a terminal application, 
+such as
+PuTTY, which is what I often do.
+
+Finally, no matter what sytem you’re on, there’s the excellent Codio. Codio is 
+a website
+that will spin up a new Linux instance for every project you have and provide 
+an IDE
+and command line, with Node already installed. It’s extremely easy to use and 
+is a great
+way to get started very quickly with Node.
+
+When you specify the -g (global) option when installing npm pack‐
+ages,  they  are  installed  in  a  subdirectory  of  your  Windows  home
+directory. I’ve found that a lot of these packages don’t perform well if
+there   are spaces in your username (my username used to be “Ethan
+Brown,” and now it’s “ethan.brown”). For your sanity, I recommend
+choosing a Windows username without a space in it. If you already
+have such a username, it’s advisable to create a new user, and then
+transfer your files over to the new account: trying to rename your
+Windows home directory is possible but fraught with danger.
+
+Once you’ve settled on a shell that makes you happy, I recommend you spend some 
+time
+getting to know the basics. There are many wonderful tutorials on the Internet, 
+and
+you’ll save yourself a lot of headaches later on by learning a little now. At 
+minimum,
+you should know how to navigate directories; copy, move, and delete files; and 
+break
+out of a command-line program (usually Ctrl-C). If you want to become a terminal
+ninja, I encourage you to learn how to search for text in files, search for 
+files and direc‐
+tories, chain commands together (the old “Unix philosophy”), and redirect 
+output.
+
+On many Unix-like systems, Ctrl-S has a special meaning: it will
+“freeze” the terminal (this was once used to pause output quickly
+scrolling past). Since this is such a common shortcut for Save, it’s
+very  easy  to  unthinkingly  press,  which  leads  to  a  very  confusing
+situation for most people (this happens to me more often than I care
+to admit). To unfreeze the terminal, simply hit Ctrl-Q. So if you’re
+ever confounded by a terminal that seems to have suddenly frozen,
+try pressing Ctrl-Q and see if it releases it.
+
+Editors
+
+Few topics inspire such heated debate among programmers as the choice of 
+editors, and
+for good reason: the editor is your primary tool. My editor of choice is vi1 
+(or an editor
+that has a vi mode). vi isn’t for everyone (my coworkers constantly roll their 
+eyes at me
+
+1.  These days, vi is essentially synonymous with vim (vi improved). On most 
+systems, vi is aliased to vim, but
+I usually type vim to make sure I’m using vim.
+
+
+when I tell them how easy it would be to do what they’re doing in vi), but 
+finding a
+powerful editor and learning to use it will significantly increase your 
+productivity and,
+dare I say it, enjoyment. One of the reasons I particularly like vi (though 
+hardly the most
+important reason) is that like bash, it is ubiquitous. If you have access to a 
+Unix system
+(Cygwin included), vi is there for you. Many popular editors (even Microsoft 
+Visual
+Studio!) have a vi mode. Once you get used to it, it’s hard to imagine using 
+anything
+else. vi is a hard road at first, but the payoff is worth it.
+
+If, like me, you see the value in being familiar with an editor that’s 
+available anywhere,
+your other option is Emacs. Emacs and I have never quite gotten on (and usually 
+you’re
+either an Emacs person or a vi person), but I absolutely respect the power and 
+flexibility
+that Emacs provides. If vi’s modal editing approach isn’t for you, I would 
+encourage you
+to look into Emacs.
+
+While knowing a console editor (like vi or Emacs) can come in incredibly handy, 
+you
+may still want a more modern editor. Some of my frontend colleagues swear by 
+Coda,
+and I trust their opinion. Unfortunately, Coda is available only on OS X. 
+Sublime Text
+is   a modern and powerful editor that also has an excellent vi mode, and it’s 
+available on
+Windows, Linux, and OS X.
+
+On Windows, there are some fine free options out there. TextPad and Notepad++ 
+both
+have their supporters. They’re both capable editors, and you can’t beat the 
+price. If you’re
+a Windows user, don’t overlook Visual Studio as a JavaScript editor: it’s 
+remarkably
+capable, and has one of the best JavaScript autocomplete engines of any editor. 
+You can
+download Visual Studio Express from Microsoft for free.
+
+npm
+
+npm is the ubiquitous package manager for Node packages (and is how we’ll get 
+and
+install Express). In the wry tradition of PHP, GNU, WINE, and others, “npm” is 
+not an
+acronym (which is why it isn’t capitalized); rather, it is a recursive 
+abbreviation for “npm
+is       not an acronym.”
+
+Broadly speaking, a package manager’s two primary responsibilities are 
+installing pack‐
+ages and manging dependencies. npm is a fast, capable, and painless package 
+manager,
+which I feel is in large part responsible for the rapid growth and diversity of 
+the Node
+ecosystem.
+
+npm is installed when you install Node, so if you followed the steps listed 
+earlier, you’ve
+already got it. So let’s get to work!
+
+
+The primary command you’ll be using with npm (unsurprisingly), is install. For 
+ex‐
+ample, to install Grunt (a popular JavaScript task runner), you would issue the 
+following
+command (on the console):
+
+npm install -g grunt-cli
+
+The -g flag tells npm to install the package globally, meaning it’s available 
+globally on
+the system. This distinction will become clearer when we cover the package.json 
+files.
+For now, the rule of thumb is that JavaScript utilities (like Grunt) will 
+generally be
+installed globally, whereas packages that are specific to your web app or 
+project will not.
+
+Unlike languages like Python—which underwent a major language
+change from 2.0 to 3.0, necessitating a way to easily switch between
+different environments—the Node platform is new enough that it is
+likely that you should always be running the latest version of Node.
+However, if you do find yourself needing to support multiple ver‐
+sion       of  Node,  there  is  a  project,  nvm,  that  allows  you  to  
+switch
+environments.
+
+A Simple Web Server with Node
+
+If you’ve ever built a static HTML website before, or are coming from a PHP or 
+ASP
+background, you’re probably used to the idea of the web server (Apache or IIS, 
+for
+example) serving your static files so that a browser can view them over the 
+network. For
+example, if you create the file about.html, and put it in the proper directory, 
+you can
+then navigate to http://localhost/about.html. Depending on your web server 
+configu‐
+ration, you might even be able to omit the .html, but the relationship between 
+URL and
+filename is clear: the web server simply knows where the file is on the 
+computer, and
+serves it to the browser.
+
+localhost, as the name implies, refers to the computer you’re on. This
+is a common alias for the IPv4 loopback address 127.0.0.1, or the IPv6
+loopback address ::1. You will often see 127.0.0.1 used instead, but I
+will       be using localhost in this book. If you’re using a remote computer
+(using SSH, for example), keep in mind that browsing to localhost will
+not connect to that computer.
+
+Node offers a different paradigm than that of a traditional web server: the app 
+that you
+write is the web server. Node simply provides the framework for you to build a 
+web
+server.
+
+“But I don’t want to write a web server,” you might be saying! It’s a natural 
+response: you
+want to be writing an app, not a web server. However, Node makes the business 
+of writing
+
+
+this web server a simple affair (just a few lines, even) and the control you 
+gain over your
+application in return is more than worth it.
+
+So let’s get to it. You’ve installed Node, you’ve made friends with the 
+terminal, and now
+you’re ready to go.
+
+Hello World
+
+I’ve always found it unfortunate that the canonical introductory programming 
+example
+is the uninspired message “Hello World.” However, it seems almost sacrilegious 
+at this
+point to fly in the face of such ponderous tradition, so we’ll start there, and 
+then move
+on  to something more interesting.
+
+In your favorite editor, create a file called helloWorld.js:
+
+var http = require('http');
+
+http.createServer(function(req,res){
+
+res.writeHead(200, { 'Content-Type': 'text/plain' });
+res.end('Hello world!');
+
+}).listen(3000);
+
+console.log('Server started on localhost:3000; press Ctrl-C to terminate.   ');
+
+Make  sure  you  are  in  the  same  directory  as  helloWorld.js,  and  type  
+node hello
+World.js. Then open up a browser and navigate to http://localhost:3000, and 
+voilà! Your
+first web server. This particular one doesn’t serve HTML; rather, it just 
+transmits the
+message “Hello world!” in plaintext to your browser. If you want, you can 
+experiment
+with sending HTML instead: just change text/plain to text/html and change 'Hello
+world!' to a string containing valid HTML. I didn’t demonstrate that, because I 
+try to
+avoid writing HTML inside JavaScript for reasons that will be discussed in more 
+detail
+in Chapter 7.
+
+Event-Driven Programming
+
+The core philosophy behind Node is that of event-driven programming. What that 
+means
+for you, the programmer, is that you have to understand what events are 
+available to
+you and how to respond to them. Many people are introduced to event-driven pro‐
+gramming by implementing a user interface: the user clicks on something, and you
+handle  the “click event.” It’s a good metaphor, because it’s understood that 
+the program‐
+mer has no control over when, or if, the user is going to click something, so 
+event-driven
+programming is really quite intuitive. It can be a little harder to make the 
+conceptual
+leap               to responding to events on the server, but the principle is 
+the same.
+
+In the previous code example, the event is implicit: the event that’s being 
+handled is an
+HTTP request. The http.createServer method takes a function as an argument; 
+that
+
+
+function will be invoked every time an HTTP request is made. Our simple program 
+just
+sets the content type to plaintext and sends the string “Hello world!”
+
+Routing
+
+Routing refers to the mechanism for serving the client the content it has asked 
+for. For
+web-based client/server applications, the client specifies the desired content 
+in the URL;
+specifically, the path and querystring (the parts of a URL will be discussed in 
+more detail
+in Chapter 6).
+
+Let’s expand our “Hello world!” example to do something more interesting. Let’s 
+serve
+a really minimal website consisting of a home page, an About page, and a Not 
+Found
+page. For now, we’ll stick with our previous example and just serve plaintext 
+instead of
+HTML:
+
+var http = require('http');
+
+http.createServer(function(req,res){
+
+// normalize url by removing querystring, optional
+
+// trailing slash, and making it lowercase
+
+var path = req.url.replace(/\/?(?:\?.*)?$/, '').toLowerCase();
+
+switch(path) {
+
+case '':
+
+res.writeHead(200, { 'Content-Type': 'text/plain' });
+res.end('Homepage');
+
+break;
+case '/about':
+
+res.writeHead(200, { 'Content-Type': 'text/plain' });
+res.end('About');
+
+break;
+default:
+
+res.writeHead(404, { 'Content-Type': 'text/plain' });
+res.end('Not Found');
+
+break;
+
+}
+
+}).listen(3000);
+
+console.log('Server started on localhost:3000; press Ctrl-C to terminate.   ');
+
+If you run this, you’ll find you can now browse to the home page 
+(http://localhost:
+3000) and the About page (http://localhost:3000/about). Any querystrings will 
+be ig‐
+nored (so http://localhost:3000/?foo=bar will serve the home page), and any 
+other URL
+(http://localhost:3000/foo) will serve the Not Found page.
+
+Serving Static Resources
+
+Now that we’ve got some simple routing working, let’s serve some real HTML and a
+logo image. These are called “static resources” because they don’t change (as 
+opposed
+to, for example, a stock ticker: every time you reload the page, the stock 
+prices change).
+
+
+Serving static resources with Node is suitable for developent and small
+projects, but for larger projects, you will probably want to use a proxy
+server such as Nginx or a CDN to serve static resources. See Chap‐
+ter  16 for more information.
+
+If you’ve worked with Apache or IIS, you’re probably used to just creating an 
+HTML
+file, navigating to it, and having it delivered to the browser automatically. 
+Node doesn’t
+work like that: we’re going to have to do the work of opening the file, reading 
+it, and
+then sending its contents along to the browser. So let’s create a directory in 
+our project
+called public (why we don’t call it static will become evident in the next 
+chapter). In that
+directory,  we’ll  create  home.html,  about.html,  notfound.html,  a  
+subdirectory  called
+img,   and an image called img/logo.jpg. I’ll leave that up to you: if you’re 
+reading this
+book, you probably know how to write an HTML file and find an image. In your 
+HTML
+files, reference the logo thusly: <img href="/img/logo.jpg" alt="logo">.
+
+Now modify helloWorld.js:
+
+var http = require('http'),
+fs = require('fs');
+
+function serveStaticFile(res, path, contentType, responseCode) {
+
+if(!responseCode) responseCode = 200;
+
+fs.readFile(  dirname + path, function(err,data) {
+
+if(err) {
+
+res.writeHead(500, { 'Content-Type': 'text/plain' });
+res.end('500 - Internal Error');
+
+} else {
+
+res.writeHead(responseCode,
+
+{ 'Content-Type': contentType });
+res.end(data);
+
+}
+
+});
+
+}
+
+http.createServer(function(req,res){
+
+// normalize url by removing querystring, optional
+
+// trailing slash, and making lowercase
+
+var path = req.url.replace(/\/?(?:\?.*)?$/, '')
+
+.toLowerCase();
+
+switch(path) {
+
+case '':
+
+serveStaticFile(res, '/public/home.html', 'text/html');
+
+break;
+case '/about':
+
+serveStaticFile(res, '/public/about.html', 'text/html');
+
+break;
+
+case '/img/logo.jpg':
+
+serveStaticFile(res, '/public/img/logo.jpg',
+
+
+'image/jpeg');
+
+break;
+default:
+
+serveStaticFile(res, '/public/404.html', 'text/html',
+404);
+
+break;
+
+}
+
+}).listen(3000);
+
+console.log('Server started on localhost:3000; press Ctrl-C to terminate.   ');
+
+In this example, we’re being pretty unimaginative with our routing.
+If you navigate to http://localhost:3000/about, the public/about.html
+file is served. You could change the route to be anything you want,
+and change the file to be anything you want. For example, if you had
+a different About page for each day of the week, you could have files
+public/about_mon.html, public/about_tue.html, and so on, and pro‐
+vide logic in your routing to serve the appropriate page when the user
+navigates to http://localhost:3000/about.
+
+Note we’ve created a helper function, serveStaticFile, that’s doing the bulk of 
+the
+work. fs.readFile is an asynchronous method for reading files. There is a 
+synchronous
+version of that function, fs.readFileSync, but the sooner you start thinking 
+asyn‐
+chronously, the better. The function is simple: it calls fs.readFile to read 
+the contents
+of             the specified file. fs.readFile executes the callback function 
+when the file has been
+read; if the file didn’t exist or there were permissions issues reading the 
+file, the err
+variable is set, and the function returns an HTTP status code of 500 indicating 
+a server
+error.   If the file is read successfully, the file is sent to the client with 
+the specified response
+code and content type. Response codes will be discussed in more detail in 
+Chapter 6.
+
+  dirname will resolve to the directory the executing script resides in.
+So if your script resides in /home/sites/app.js,     dirname will resolve
+to  /home/sites.  It’s  a  good  idea  to  use  this  handy  global  whenever
+possible. Failing to do so can cause hard-to-diagnose errors if you run
+your app from a different directory.
+
+Onward to Express
+
+So far, Node probably doesn’t seem that impressive to you. We’ve basically 
+replicated
+what Apache or IIS do for you automatically, but now you have some insight into 
+how
+Node does things and how much control you have. We haven’t done anything 
+particu‐
+larly impressive, but you can see how we could use this as a jumping-off point 
+to do
+more sophisticated things. If we continued down this road, writing more and 
+more
+
+
+sophisticated Node applications, you might very well end up with something that 
+re‐
+sembles Express….
+
+Fortunately, we don’t have to: Express already exists, and it saves you from 
+implementing
+a lot of time-consuming infrastructure. So now that we’ve gotten a little Node 
+experience
+under our belt, we’re ready to jump into learning Express.
+
+
+CHAPTER 3
+
+Saving Time with Express
+
+In Chapter 2, you learned how to create a simple web server using only Node. In 
+this
+chapter, we will recreate that server using Express. This will provide a 
+jumping-off point
+for   the rest of the content of this book and introduce you to the basics of 
+Express.
+
+Scaffolding
+
+Scaffolding is not a new idea, but many people (myself included) were 
+introduced to
+the concept by Ruby. The idea is simple: most projects require a certain amount 
+of so-
+called “boilerplate” code, and who wants to recreate that code every time you 
+begin a
+new project? A simple way is to create a rough skeleton of a project, and every 
+time you
+need a new project, you just copy this skeleton, or template.
+
+Ruby on Rails took this concept one step further by providing a program that 
+would
+automatically generate scaffolding for you. The advantage of this approach is 
+that it
+could generate a more sophisticated framework than just selecting from a 
+collection of
+templates.
+
+Express has taken a page from Ruby on Rails and provided a utility to generate 
+scaf‐
+folding to start your Express project.
+
+While the Express scaffolding utility is useful, it currently doesn’t generate 
+the frame‐
+work I will be recommending in this book. In particular, it doesn’t provide 
+support for
+my templating language of choice (Handlebars), and it also doesn’t follow some 
+of the
+naming conventions I prefer (though that is easy enough to fix).
+
+While we won’t be using the scaffolding utility, I encourage you to take a look 
+at it once
+you’ve finished the book: by then you’ll be armed with everything you need to 
+know to
+evaluate whether the scaffolding it generates is useful for you.
+
+Boilerplate is also useful for the actual HTML that will be delivered to the 
+client. I
+recommend the excellent HTML5 Boilerplate. It generates a great blank slate for 
+an
+
+19
+
+
+HTML5 website. Recently, HTML5 Boilerplate has added the ability to generate a 
+cus‐
+tom build. One of the custom build options includes Twitter Bootstrap, a 
+frontend
+framework I highly recommend. We’ll be using a Bootstrap-based custom build in
+Chapter    7 to provide a responsive, modern HTML5 website.
+
+The Meadowlark Travel Website
+
+Throughout  this  book,  we’ll  be  using  a  running  example:  a  fictional  
+website  for
+Meadowlark Travel, a company offering services for people visiting the great 
+state of
+Oregon. If you’re more interested in creating a REST application, have no fear: 
+the
+Meadowlark Travel website will expose REST services in addition to serving a 
+functional
+website.
+
+Initial Steps
+
+Start by creating a new directory for your project: this will be the root 
+directory for your
+project. In this book, whenever we refer to the “project directory,” “app 
+directory,” or
+“project root,” we’re referring to this directory.
+
+You’ll probably want to keep your web app files separate from all the
+other files that usually accompany a project, such as meeting notes,
+documentation,  etc.  For  that  reason,  I  recommend  making  your
+project           root a subdirectory of your project directory. For example, 
+for
+the Meadowlark Travel website, I might keep the project in ~/projects/
+meadowlark, and the project root in ~/projects/meadowlark/site.
+
+npm manages project dependencies—as well as metadata about the project—in a file
+called package.json. The easiest way to create this file is to run npm init: it 
+will ask you
+a series of questions and generate a package.json file to get you started (for 
+the “entry
+point” question, use meadowlark.js or the name of your project).
+
+Every time you run npm, you’ll get warnings unless you provide a
+repository URL in package.json, and a nonempty README.md file.
+The metadata in the package.json file is really only necessary if you’re
+planning on publishing to the npm repository, but squelching npm
+warnings is worth the small effort.
+
+The first step will be installing Express. Run the following npm command:
+
+npm install --save express
+
+Running npm install will install the named package(s) in the node_modules 
+directo‐
+ry.  If  you  specify  the  --save flag,  it  will  update  the  package.json  
+file.  Since  the
+
+
+node_modules dirctory can be regenerated at any time with npm, we will not save 
+it in
+our repository. To ensure we don’t accidentally add it to our repository, we 
+create a file
+called .gitignore:
+
+# ignore packages installed by npm
+node_modules
+
+# put any other files you don't want to check in here,
+# such as .DS_Store (OSX), *.bak, etc.
+
+Now create a file called meadowlark.js. This will be our project’s entry point. 
+Throughout
+the book, we will simply be referring to this file as the “app file”:
+
+var express = require('express');
+
+var app = express();
+
+app.set('port', process.env.PORT || 3000);
+
+// custom 404 page
+
+app.use(function(req, res){
+res.type('text/plain');
+res.status(404);
+res.send('404 - Not Found');
+
+});
+
+// custom 500 page
+
+app.use(function(err, req, res, next){
+console.error(err.stack);
+res.type('text/plain');
+res.status(500);
+
+res.send('500 - Server Error');
+
+});
+
+app.listen(app.get('port'), function(){
+
+console.log( 'Express started on http://localhost:' +
+app.get('port') + '; press Ctrl-C to terminate.' );
+
+});
+
+Many tutorials, as well as the Express scaffolding generator, encour‐
+age you to name your primary file app.js (or sometimes index.js or
+server.js). Unless you’re using a hosting service or deployment sys‐
+tem   that requires your main application file to have a specific name,
+I don’t feel there’s a compelling reason to do this, and I prefer to name
+the primary file after the project. Anyone who’s ever stared at a bunch
+of editor tabs that all say “index.html” will immediately see the wis‐
+dom of this. npm init will default to index.js; if you use a different
+name for your application file, make sure to update the main proper‐
+ty   in package.json.
+
+
+You  now  have  a  minimal  Express  server.  You  can  start  the  server  
+(node meadow
+lark.js), and navigate to http://localhost:3000. The result will be 
+disappointing: you
+haven’t provided Express with any routes, so it will simply give you a generic 
+404 page
+indicating that the page doesn’t exist.
+
+Note how we specify the port that we want our application to run on:
+app.set(port,  process.env.PORT  ||  3000).  This  allows  us  to
+override the port by setting an environment value before you start the
+server.  If  your  app  isn’t  running  on  port  3000  when  you  run  this
+example, check to see if your PORT environment variable is set.
+
+I  highly  recommend  getting  a  browser  plugin  that  shows  you  the
+status code of the HTTP request as well as any redirects that took
+place. It will make it easier to spot redirect issues in your code, or
+incorrect status codes, which are often overlooked. For Chrome, Ayi‐
+ma’s Redirect Path works wonderfully. In most browsers, you can see
+the status code in the Network section of the developer tools.
+
+Let’s add some routes for the home page and an About page. Before the 404 
+handler,
+we’ll add two new routes:
+
+app.get('/', function(req, res){
+res.type('text/plain');
+res.send('Meadowlark Travel');
+
+});
+
+app.get('/about', function(req, res){
+res.type('text/plain');
+res.send('About Meadowlark Travel');
+
+});
+
+// custom 404 page
+
+app.use(function(req, res, next){
+res.type('text/plain');
+res.status(404);
+res.send('404 - Not Found');
+
+});
+
+app.get is the method by which we’re adding routes. In the Express 
+documentation,
+you will see app.VERB. This doesn’t mean that there’s literally a method called 
+VERB; it’s
+just a placeholder for your (lowercased) HTTP verbs (“get” and “post” being the 
+most
+common). This method takes two parameters: a path and a function.
+
+The path is what defines the route. Note that app.VERB does the heavy lifting 
+for you:
+by default, it doesn’t care about the case or trailing slash, and it doesn’t 
+consider the
+querystring when performing the match. So the route for the About page will work
+for    /about, /About, /about/, /about?foo=bar, /about/?foo=bar, etc.
+
+
+The function you provide will get invoked when the route is matched. The 
+parameters
+passed to that function are the request and response objects, which we’ll learn 
+more
+about in Chapter 6. For now, we’re just returning plaintext with a status code 
+of 200
+(Express defaults to a status code of 200—you don’t have to specify it 
+explicitly).
+
+Instead of using Node’s low-level res.end, we’re switching to using Express’s 
+extension,
+res.send. We are also replacing Node’s res.writeHead with res.set and res.sta
+tus. Express is also providing us a convenience method, res.type, which sets the
+Content-Type header. While it’s still possible to use res.writeHead and 
+res.end, it isn’t
+necessary    or recommended.
+
+Note that our custom 404 and 500 pages must be handled slightly differently. 
+Instead
+of using app.get, it is using app.use. app.use is the method by which Express 
+adds
+middleware. We’ll be covering middleware in more depth in Chapter 10, but for 
+now,
+you        can think of this as a catch-all handler for anything that didn’t 
+get matched by a
+route. This brings us to a very important point: in Express, the order in which 
+routes and
+middleware are added is significant. If we put the 404 handler above the 
+routes, the home
+page     and About page would stop working: instead, those URLs would result in 
+a 404.
+Right now, our routes are pretty simple, but they also support wildcards, which 
+can lead
+to problems with ordering. For example, what if we wanted to add subpages to 
+About,
+such as /about/contact and /about/directions? The following will not work as 
+expected:
+
+app.get('/about*',function(req,res){
+
+// send content....
+
+})
+
+app.get('/about/contact',function(req,res){
+
+// send content....
+
+})
+
+app.get('/about/directions',function(req,res){
+
+// send content....
+
+})
+
+In this example, the /about/contact and /about/directions handlers will never be
+matched because the first handler uses a wildcard in its path: /about*.
+
+Express can distinguish between the 404 and 500 handlers by the number of 
+arguments
+their callback functions take. Error routes will be covered in depth in 
+Chapters 10 and 12.
+
+Now you can start the server again, and see that there’s a functioning home 
+page and
+About page.
+
+So far, we haven’t done anything that couldn’t be done just as easily without 
+Express,
+but already Express is providing us some functionality that isn’t immediately 
+obvious.
+Remember in the previous chapter how we had to normalize req.url to determine 
+what
+resource was being requested? We had to manually strip off the querystring and 
+the
+trailing slash, and convert to lowercase. Express’s router is now handling 
+those details
+
+
+for us automatically. While it may not seem like a large thing now, it’s only 
+scratching
+the surface of what Express’s router is capable of.
+
+Views and Layouts
+
+If you’re familiar with the “model-view-controller” paradigm, then the concept 
+of a view
+will be no stranger to you. Essentially, a view is what gets delivered to the 
+user. In the
+case of a website, that usually means HTML, though you could also deliver a PNG 
+or a
+PDF, or anything that can be rendered by the client. For our purposes, we will 
+consider
+views to be HTML.
+
+Where a view differs from a static resource (like an image or CSS file) is that 
+a view
+doesn’t necessarily have to be static: the HTML can be constructed on the fly 
+to provide
+a customized page for each request.
+
+Express supports many different view engines that provide different levels of 
+abstrac‐
+tion. Express gives some preference to a view engine called Jade (which is no 
+surprise,
+because it is also the brainchild of TJ Holowaychuk). The approach Jade takes 
+is very
+minimal: what you write doesn’t resemble HTML at all, which certainly 
+represents a lot
+less typing: no more angle brackets or closing tags. The Jade engine then takes 
+that and
+converts it to HTML.
+
+Jade is very appealing, but that level of abstraction comes at a cost. If 
+you’re a frontend
+developer, you have to understand HTML and understand it well, even if you’re 
+actually
+writing your views in Jade. Most frontend developers I know are uncomfortable 
+with
+the idea of their primary markup language being abstracted away. For this 
+reason, I am
+recommending the use of another, less abstract templating framework called 
+Handle‐
+bars. Handlebars (which is based on the popular language-independent templating
+language Mustache) doesn’t attempt to abstract away HTML for you: you write HTML
+with special tags that allow Handlebars to inject content.
+
+To  provide  Handlebars  support,  we’ll  use  Eric  Ferraiuolo’s  
+express3-handlebars
+package (despite the name, this package works fine with Express 4.0). In your 
+project
+directory, execute:
+
+npm install --save express3-handlebars
+
+Then in meadowlark.js, add the following lines after the app has been created:
+
+var app = express();
+
+// set up handlebars view engine
+
+var handlebars = require('express3-handlebars')
+
+.create({ defaultLayout:'main' });
+app.engine('handlebars', handlebars.engine);
+app.set('view   engine', 'handlebars');
+
+
+This creates a view engine and configures Express to use it by default. Now 
+create a
+directory called views that has a subdirectory called layouts. If you’re an 
+experienced
+web developer, you’re probably already comfortable with the concepts of layouts 
+(some‐
+times called “master pages”). When you build a website, there’s a certain 
+amount of
+HTML that’s the same—or very close to the same—on every page. Not only does it
+become tedious to rewrite all that repetitive code for every page, it creates a 
+potential
+maintenance nightmare: if you want to change something on every page, you have 
+to
+change all the files. Layouts free you from this, providing a common framework 
+for all
+the pages on your site.
+
+So let’s create a template for our site. Create a file called 
+views/layouts/main.handlebars:
+
+<!doctype html>
+
+<html>
+
+<head>
+
+<title>Meadowlark Travel</title>
+
+</head>
+
+<body>
+
+{{{body}}}
+
+</body>
+
+</html>
+
+The only thing that you probably haven’t seen before is this: {{{body}}}. This 
+expression
+will be replaced with the HTML for each view. When we created the Handlebars in‐
+stance, note we specified the default layout (defaultLayout:'main'). That means 
+that
+unless you specify otherwise, this is the layout that will be used for any 
+view.
+
+Now let’s create view pages for our home page, views/home.handlebars:
+
+<h1>Welcome to Meadowlark Travel</h1>
+
+Then our About page, views/about.handlebars:
+
+<h1>About Meadowlark Travel</h1>
+
+Then our Not Found page, views/404.handlebars:
+
+<h1>404 - Not Found</h1>
+
+And finally our Server Error page, views/500.handlebars:
+
+<h1>500 - Server Error</h1>
+
+You probably want your editor to associate .handlebars and .hbs (an‐
+other common extension for Handlebars files) with HTML, to enable
+syntax highlighting and other editor features. For vim, you can add
+the   line   au  BufNewFile,BufRead  *.handlebars  set  file
+type=html to  your  ~/.vimrc  file.  For  other  editors,  consult  your
+documentation.
+
+
+Now that we’ve got some views set up, we have to replace our old routes with 
+new routes
+that use these views:
+
+app.get('/', function(req, res) {
+res.render('home');
+
+});
+
+app.get('/about', function(req, res) {
+res.render('about');
+
+});
+
+// 404 catch-all handler (middleware)
+
+app.use(function(req, res, next){
+res.status(404);
+res.render('404');
+
+});
+
+// 500 error handler (middleware)
+
+app.use(function(err, req, res, next){
+console.error(err.stack);
+res.status(500);
+res.render('500');
+
+});
+
+Note that we no longer have to specify the content type or status code: the 
+view engine
+will return a content type of text/html and a status code of 200 by default. In 
+the catch-
+all handler, which provides our custom 404 page, and the 500 handler, we have 
+to set
+the status code explicitly.
+
+If you start your server and check out the home or About page, you’ll see that 
+the views
+have been rendered. If you examine the source, you’ll see that the boilerplate 
+HTML
+from views/layouts/main.handlebars is there.
+
+Static Files and Views
+
+Express relies on a middleware to handle static files and views. Middleware is 
+a concept
+that will be covered in more detail in Chapter 10. For now, it’s sufficient to 
+know that
+middleware provides modularization, making it easier to handle requests.
+
+The static middleware allows you to designate one or more directories as 
+containing
+static resources that are simply to be delivered to the client without any 
+special handling.
+This is where you would put things like images, CSS files, and client-side 
+JavaScript files.
+
+In your project directory, create a subdirectory called public (we call it 
+public because
+anything in this directory will be served to the client without question). 
+Then, before
+you declare any routes, you’ll add the static middleware:
+
+app.use(express.static(  dirname + '/public'));
+
+
+The static middleware has the same effect as creating a route for each static 
+file you
+want to deliver that renders a file and returns it to the client. So let’s 
+create an img
+subdirectory inside public, and put our logo.png file in there.
+
+Now we can simply reference /img/logo.png (note, we do not specify public; that 
+di‐
+rectory is invisible to the client), and the static middleware will serve that 
+file, setting
+the content type appropriately. Now let’s modify our layout so that our logo 
+appears on
+every page:
+
+<body>
+
+<header><img src="/img/logo.png" alt="Meadowlark Travel Logo"></header>
+
+{{{body}}}
+
+</body>
+
+The <header> element was introduced in HTML5 to provide addi‐
+tional semantic information about content that appears at the top of
+the page, such as logos, title text, or navigation.
+
+Dynamic Content in Views
+
+Views aren’t simply a complicated way to deliver static HTML (though they can 
+certainly
+do that as well). The real power of views is that they can contain dynamic 
+information.
+
+Let’s say that on the About page, we want to deliver a “virtual fortune 
+cookie.” In our
+
+meadowlark.js file, we define an array of fortune cookies:
+
+var fortunes = [
+
+"Conquer your fears or they will conquer you.",
+"Rivers need springs.",
+
+"Do not fear what you don't know.",
+"You will have a pleasant surprise.",
+"Whenever possible, keep it simple.",
+
+];
+
+Modify the view (/views/about.handlebars) to display a fortune:
+
+<h1>About Meadowlark Travel</h1>
+
+<p>Your fortune for the day:</p>
+
+<blockquote>{{fortune}}</blockquote>
+
+Now modify the route /about to deliver the random fortune cookie:
+
+app.get('/about', function(req, res){
+
+var randomFortune =
+
+fortunes[Math.floor(Math.random() * fortunes.length)];
+res.render('about', { fortune: randomFortune });
+
+});
+
+
+Now if you restart the server and load the /about page, you’ll see a random 
+fortune.
+Templating is incredibly useful, and we will be covering it in depth in Chapter 
+7.
+
+Conclusion
+
+We’ve created a very basic website with Express. Even though it’s simple, it 
+contains all
+the seeds we need for a full-featured website. In the next chapter, we’ll be 
+crossing our
+ts and dotting our is in preparation for adding more advanced functionality.
+
+
+CHAPTER 4
+
+Tidying Up
+
+In the last two chapters, we were just experimenting: dipping our toes into the 
+waters,
+so to speak. Before we proceed to more complex functionality, we’re going to do 
+some
+housekeeping and build some good habits into our work.
+
+In this chapter, we’ll start our Meadowlark Travel project in earnest. Before 
+we start
+building the website itself, though, we’re going to make sure we have the tools 
+we need
+to produce a high-quality product.
+
+The running example in this book is not necessarily one you have to
+follow. If you’re anxious to build your own website, you could follow
+the framework of the running example, but modify it accordingly so
+that  by  the  time  you  finish  this  book,  you  could  have  a  finished
+website!
+
+Best Practices
+
+The phrase “best practices” is one you hear thrown around a lot these days, and 
+it means
+that you should “do things right” and not cut corners (we’ll talk about what 
+this means
+specifically in a moment). No doubt you’ve heard the engineering adage that 
+your op‐
+tions     are “fast,” “cheap,” and “good,” and you can pick any two. The thing 
+that’s always
+bothered me about this model is that it doesn’t take into account the accrual 
+value of
+doing things correctly. The first time you do something correctly, it may take 
+five times
+as long to do it as it would have to do it quick and dirty. The second time, 
+though, it’s
+only going to take three times as long. By the time you’ve done it correctly a 
+dozen times,
+you’ll be doing it almost as fast as the quick and dirty way.
+
+I had a fencing coach who would always remind us that practice doesn’t make 
+perfect:
+practice makes permanent. That is, if you do something over and over again, 
+eventually
+it      will become automatic, rote. That is true, but it says nothing about 
+the quality of the
+
+
+thing you are practicing. If you practice bad habits, then bad habits become 
+rote. Instead,
+you should follow the rule that perfect practice makes perfect. In that spirit, 
+I encourage
+you to follow the rest of the examples in this book as if you were making a 
+real-live
+website, as if your reputation and remuneration were depending on the quality 
+of the
+outcome. Use this book to not only learn new skills, but to practice building 
+good habits.
+
+The practices we will be focusing on are version control and QA. In this 
+chapter, we’ll
+be discussing version control, and we’ll discuss QA in the next chapter.
+
+Version Control
+
+Hopefully I don’t have to convince you of the value of version control (if I 
+did, that might
+take a whole book itself). Broadly speaking, version control offers these 
+benefits:
+
+Documentation
+
+Being able to go back through the history of a project to see the decisions 
+that were
+made and the order in which components were developed can be valuable docu‐
+mentation. Having a technical history of your project can be quite useful.
+
+Attribution
+
+If you work on a team, attribution can be hugely important. Whenever you find
+something in code that is opaque or questionable, knowing who made that change
+can save you many hours. It could be that the comments associated with the 
+change
+are sufficient to answer your questions, and if not, you’ll know who to talk 
+to.
+
+Experimentation
+
+A good version control system enables experimentation. You can go off on a 
+tangent,
+trying something new, without fear of affecting the stability of your project. 
+If the
+experiment is successful, you can fold it back into the project, and if it is 
+not suc‐
+cessful, you can abandon it.
+
+Years ago, I made the switch to distributed version control systems (DVCS). I 
+narrowed
+my choices down to Git and Mercurial, and went with Git, due to its ubiquity and
+flexibility. Both are excellent and free version control systems, and I 
+recommend you
+use     one of them. In this book, we will be using Git, but you are welcome to 
+substitute
+Mercurial (or another version control system altogether).
+
+If you are unfamiliar with Git, I recommend Jon Loeliger’s excellent Version 
+Control
+with Git (O’Reilly). Also, Code School has a nice introductory course on Git.
+
+How to Use Git with This Book
+
+First, make sure you have Git. Type git --version. If it doesn’t respond with a 
+version
+number,  you’ll  need  to  install  Git.  See  the  Git  documentation  for  
+installation
+instructions.
+
+
+There are two ways to follow along with the examples in this book. One is to 
+type out
+the examples yourself, and follow along with the Git commands. The other is to 
+clone
+the Git repository I am using for all of the examples and check out the 
+associated tags
+for each example. Some people learn better by typing out examples, while some 
+prefer
+to just see and run the changes without having to type it all in.
+
+If You’re Following Along by Doing It Yourself
+
+We’ve already got a very rough framework for our project: some views, a layout, 
+a logo,
+a main application file, and a package.json file. Let’s go ahead and create a 
+Git repository
+and add all those files.
+
+First, we go to the project directory and create a Git repository there:
+
+git init
+
+Now before we add all the files, we’ll create a .gitignore file to help prevent 
+us from
+accidentally adding things we don’t want to add. Create a text file called 
+.gitignore in
+your project directory in which you can add any files or directories you want 
+Git to
+ignore by default (one per line). It also supports wildcards. For example, if 
+your editor
+creates backup files with a tilde at the end (like meadowlark.js~), you might 
+put *~ in
+the .gitignore file. If you’re on a Mac, you’ll want to put .DS_Store in there. 
+You’ll also
+want to put node_modules in there (for reasons that will be discussed soon). So 
+for now,
+the file might look like this:
+
+node_modules
+
+*~
+
+.DS_Store
+
+Entries in the .gitignore file also apply to subdirectories. So if you put
+
+*~ in the .gitignore in the project root, all such backup files will be
+ignored even if they are in subdirectories.
+
+Now we can add all of our existing files. There are many ways to do this in 
+Git. I generally
+favor git add -A, which is the most sweeping of all the variants. If you are 
+new to Git,
+I recommend you either add files one by one (git add meadowlark.js, for example)
+if you only want to commit one or two files, or git add -A if you want to add 
+all of
+your changes (including any files you might have deleted). Since we want to add 
+all the
+work we’ve already done, we’ll use:
+
+git add -A
+
+
+Newcomers to Git are commonly confused by the git add command:
+it adds changes, not files. So if you’ve modified meadowlark.js, and
+then you type git add meadowlark.js, what you’re really doing is
+adding the changes you’ve made.
+
+Git has a “staging area,” where changes go when you run git add. So the changes 
+we’ve
+added haven’t actually been committed yet, but they’re ready to go. To commit 
+the
+changes, use git commit:
+
+git commit -m "Initial commit."
+
+The -m "Initial commit." allows you to write a message associated with this 
+commit.
+Git won’t even let you make a commit without a message, and for good reason. 
+Always
+strive to make meaningful commit messages: they should briefly but concisely 
+describe
+the work you’ve done.
+
+If You’re Following Along by Using the Official Repository
+
+For the official repository, I create a tag every time we add to or modify the 
+existing
+source code. To get started with it, simply clone it:
+
+git clone https://github.com/EthanRBrown/web-development-with-node-and-express
+
+For convenience, I’ve added a tag for the beginning of each chapter (which 
+usually points
+to the last commit of the previous chapter). So now you can just check out the 
+tag
+associated with this chapter:
+
+git checkout ch04
+
+Note that chapter tags (like ch04) represent the state of the project as you’re 
+going into
+that chapter, before we’ve covered anything, and may sometimes be concomitant 
+with
+the last tag in the previous chapter. As the chapter progresses, tags will be 
+added after
+the content is discussed. For example, once you read the upcoming “npm Packages”
+section, you can check out the tag ch04-npm-packages to see the changes 
+discussed in
+that section. Not every section has a corresponding tag, but I’ve tried to make 
+the
+repository as easy to follow as possible. See the README file for more 
+information
+about how the repository is structured.
+
+
+If at any point you want to experiment, keep in mind that the tag you
+have checked out puts you in what Git calls a “detached HEAD” state.
+While you are free to edit any files, it is unsafe to commit anything
+you do without creating a branch first. So if you do want to base an
+experimental branch off of a tag, simply create a new branch and
+check            it out, which you can do with one command: git checkout -b
+experiment (where experiment is the name of your branch; you can
+use whatever you want). Then you can safely edit and commit on that
+branch as much as you want.
+
+npm Packages
+
+The npm packages that your project relies on reside in a directory called 
+node_mod‐
+ules (it’s unfortunate that this is called node_modules and not npm_packages, 
+as Node
+modules are a related but different concept). Feel free to explore that 
+directory to satisfy
+your curiosity or to debug your program, but you should never modify any code 
+in this
+directory. In addition to that being bad practice, all of your changes could 
+easily be
+undone by npm. If you need to make a modification to a package your project 
+depends
+on,   the correct course of action would be to create your own fork of the 
+project. If you
+do go this route, and you feel that your improvements would be useful to 
+others, con‐
+gratulations: you’re now involved in an open source project! You can submit your
+changes, and if they meet the project standards, they’ll be included in the 
+official pack‐
+age. Contributing to existing packages and creating customized builds is beyond 
+the
+scope of this book, but there is a vibrant community of developers out there to 
+help you
+if you want to contribute to existing packages.
+
+The purpose of the package.json file is twofold: to describe your project and 
+to list
+dependencies. Go ahead and look at your package.json file now. You should see 
+this:
+
+{
+
+"dependencies": {
+
+"express": "^4.0.0",
+
+"express3-handlebars": "^0.5.0"
+
+}
+
+}
+
+Right now, our package.json file contains only information about dependencies. 
+The
+caret (^) in front of the package versions indicates that any version that 
+starts with the
+specified version number—up to the next major version number—will work. For ex‐
+ample, this package.json indicates that any version of Express that starts with 
+4.0.0 will
+work, so 4.0.1 and 4.9.9 would both work, but 3.4.7 would not, nor would 5.0.0. 
+This is
+the default version specificity when you use npm install --save, and is 
+generally a
+pretty safe bet. The consequence of this approach is that if you want to move 
+up to a
+newer version, you will have to edit the file to specify the new version. 
+Generally, that’s
+a good thing because it prevents changes in dependencies from breaking your 
+project
+
+
+without your knowing about it. Version numbers in npm are parsed by a component
+called “semver” (for “semantic versioner”). If you want more information about 
+ver‐
+sioning in npm, consult the semver documentation.
+
+Since the package.json file lists all the dependencies, the node_modules 
+directory is really
+a derived artifact. That is, if you were to delete it, all you would have to do 
+to get the
+project working again would be to run npm install, which will recreate the 
+directory
+and put all the necessary dependencies in it. It is for this reason that I 
+recommend
+putting node_modules in your .gitignore file, and not including it in source 
+control.
+However, some people feel that your repository should contain everything 
+necessary to
+run    the project, and prefer to keep node_modules in source control. I find 
+that this is
+“noise” in the repository, and I prefer to omit it.
+
+Whenever you use a Node module in your project, you should make sure it’s 
+listed as a
+dependency in package.json. If you fail to do this, npm will be unable to 
+construct the
+right dependencies, and when another developer checks out the project (or when 
+you
+do on a different computer), the correct dependencies won’t be installed, which 
+negates
+the value of a package manager.
+
+Project Metadata
+
+The other purpose of the package.json file is to store project metadata, such 
+as the name
+of the project, authors, license information, and so on. If you use npm init to 
+initially
+create your package.json file, it will populate the file with the necessary 
+fields for you,
+and you can update them at any time. If you intend to make your project 
+available on
+npm or GitHub, this metadata becomes critical. If you would like more 
+information
+about the fields in package.json, see the package.json documentation. The other 
+impor‐
+tant piece of metadata is the README.md file. This file can be a handy place to 
+describe
+the overall architecture of the website, as well as any critical information 
+that someone
+new to the project might need. It is in a text-based wiki format called 
+Markdown. Refer
+to the Markdown documentation for more information.
+
+Node Modules
+
+As mentioned earlier, Node modules and npm packages are related but different 
+con‐
+cepts. Node modules, as the name implies, offer a mechanism for modularization 
+and
+encapsulation. npm packages provide a standardized scheme for storing, 
+versioning,
+and referencing projects (which are not restricted to modules). For example, we 
+import
+Express itself as a module in our main application file:
+
+var express = require('express');
+
+require is a Node function for importing a module. By default, Node looks for 
+modules
+in the directory node_modules (it should be no surprise, then, that there’s an 
+express
+
+
+directory inside of node_modules). However, Node also provides a mechanism for
+creating  your  own  modules  (you  should  never  create  your  own  modules  
+in  the
+node_modules directory). Let’s see how we can modularize the fortune cookie 
+func‐
+tionality      we implemented in the previous chapter.
+
+First let’s create a directory to store our modules. You can call it whatever 
+you want, but
+
+lib (short for “library”) is a common choice. In that folder, create a file 
+called fortune.js:
+
+var fortuneCookies = [
+
+"Conquer your fears or they will conquer you.",
+"Rivers need springs.",
+
+"Do not fear what you don't know.",
+"You will have a pleasant surprise.",
+"Whenever possible, keep it simple.",
+
+];
+
+exports.getFortune = function() {
+
+var idx = Math.floor(Math.random() * fortuneCookies.length);
+
+return fortuneCookies[idx];
+
+};
+
+The important thing to note here is the use of the global variable exports. If 
+you want
+something to be visible outside of the module, you have to add it to exports. 
+In this
+example, the function getFortune will be available from outside this module, 
+but our
+array fortuneCookies will be completely hidden. This is a good thing: 
+encapsulation
+allows for less error-prone and fragile code.
+
+There are several ways to export functionality from a module. We will
+be covering different methods throughout the book and summariz‐
+ing them in Chapter 22.
+
+Now in meadowlark.js, we can remove the fortuneCookies array (though there would
+be no harm in leaving it: it can’t conflict in any way with the array with the 
+same name
+defined in lib/fortune.js). It is traditional (but not required) to specify 
+imports at the top
+of    the file, so at the top of the meadowlark.js file, add the following 
+line:
+
+var fortune = require('./lib/fortune.js');
+
+Note that we prefix our module name with ./. This signals to Node that it 
+should not
+look for the module in the node_modules directory; if we omitted that prefix, 
+this would
+fail.
+
+
+Now in our route for the About page, we can utilize the getFortune method from 
+our
+module:
+
+app.get('/about', function(req, res) {
+
+res.render('about', { fortune: fortune.getFortune() } );
+
+});
+
+If you’re following along, let’s commit those changes:
+
+git add -A
+
+git commit -m "Moved 'fortune cookie' functionality into module."
+
+Or if you’re using the official repository, you can see the changes in this 
+tag:
+
+git checkout ch04
+
+You will find modules to be a very powerful and easy way to encapsulate 
+functionality,
+which will improve the overall design and maintainability of your project, as 
+well as
+make  testing  easier.  Refer  to  the  official  Node  module  documentaion  
+for  more
+information.
+
+
+CHAPTER 5
+
+Quality Assurance
+
+Quality assurance: it’s a phrase that is prone to send shivers down the spines 
+of devel‐
+opers—which is unfortunate. After all, don’t you want to make quality software? 
+Of
+course you do. So it’s not the end goal that’s the sticking point: it’s the 
+politics of the
+matter. I’ve found that there are two common situations that arise in web 
+development:
+
+Large or well-funded organizations
+
+There’s usually a QA department and, unfortunately, an adversarial relationship
+springs up between QA and development. This is the worst thing that can happen.
+Both departments are playing on the same team, for the same goal, but QA often
+defines success as finding more bugs, while development defines success as 
+gener‐
+ating fewer bugs, and that serves as the basis for conflict and competition.
+
+Small organizations and organizations on a budget
+
+Often, there is no QA department; the development staff is expected to serve the
+dual role of establishing QA and developing software. This is not a ridiculous 
+stretch
+of the imagination or a conflict of interest. However, QA is a very different 
+discipline
+than development, and it attracts different personalities and talents. This is 
+not an
+impossible situation, and certainly there are developers out there who have the 
+QA
+mindset, but when deadlines loom, it’s usually QA that gets the short shrift, 
+to the
+project’s detriment.
+
+With  most  real-world  endeavors,  multiple  skills  are  required,  and  
+increasingly,  it’s
+harder to be an expert in all of those skills. However, some competency in the 
+areas for
+which you are not directly responsible will make you more valuable to the team 
+and
+make the team function more effectively. A developer acquiring QA skills offers 
+a great
+example: these two disciplines are so tightly intertwined that 
+cross-disciplinary under‐
+standing is extremely valuable.
+
+There is also a movement to merge the roles of QA and development, making 
+developers
+responsible for QA. In this paradigm, software engineers who specialize in QA 
+act
+
+
+almost as consultants to developers, helping them build QA into their 
+development
+workflow. Whether QA roles are divided or integrated, it is clear that 
+understanding
+QA         is beneficial to developers.
+
+This book is not for QA professionals; it is aimed at developers. So my goal is 
+not to
+make you a QA expert, but to give you some experience in that area. If your 
+organization
+has a dedicated QA staff, it will make it easier for you to communicate and 
+collaborate
+with them. If you do not, it will give you a starting point to establishing a 
+comprehensive
+QA plan for your project.
+
+QA: Is It Worth It?
+
+QA can be expensive—sometimes very expensive. So is it worth it? It’s a 
+complicated
+formula with complicated inputs. Most organizations operate on some kind of 
+“return
+on investment” model. If you spend money, you must expect to receive at least 
+as much
+money in return (preferably more). With QA, though, the relationship can be 
+muddy.
+A well-established and well-regarded product, for example, may be able to get 
+by with
+quality issues for longer than a new and unknown project. Obviously, no one 
+wants to
+produce a low-quality product, but the pressures in technology are high. 
+Time-to-
+market can be critical, and sometimes it’s better to come to market with 
+something that’s
+less than perfect than to come to market with the perfect product two months 
+later.
+
+In web development, quality can be broken down into three dimensions:
+
+Reach
+
+Reach refers to the market penetration of your product: the number of people
+viewing your website or using your service. There’s a direct correlation between
+reach and profitability: the more people who visit the website, the more people 
+who
+buy the product or service. From a development perspective, search engine opti‐
+mization (SEO) will have the biggest impact on reach, which is why we will be
+including SEO in our QA plan.
+
+Functionality
+
+Once people are visiting your site or using your service, the quality of your 
+site’s
+functionality  will  have  a  large  impact  on  user  retention:  a  site  
+that  works  as
+advertised is more likely to drive return visits than one that isn’t. Unlike 
+the other
+dimensions, functionality testing can often be automated.
+
+Usability
+
+Where functionality is concerned with functional correctness, usability 
+evaluates
+human-computer  interaction  (HCI).  The  fundamental  question  is,  “Is  the
+functionality delivered in a way that is useful to the target audience?” This 
+often
+translates to, “Is it easy to use?” though the pursuit of ease can often oppose 
+flexi‐
+bility or power: what seems easy to a programmer might be different than what
+seems easy to a nontechnical consumer. In other words, you must consider your
+
+
+target audience when assessing usability. Since a fundamental input to a 
+usability
+measurement is a user, usability is not usually something that can be automated.
+However, user testing should be included in your QA plan.
+
+Aesthetics
+
+Aesthetics is the most subjective of the three dimensions and is therefore the 
+least
+relevant to development. While there are few development concerns when it comes
+to  your site’s aesthetics, routine reviews of your site’s aesthetics should be 
+part of
+your QA plan. Show your site to a representative sample audience, and find out 
+if
+it feels dated or does not invoke the desired response. Keep in mind that 
+aesthetics
+is time sensitive (aesthetic standards shift over time) and audience specific 
+(what
+appeals to one audience may be completely uninteresting to another).
+
+While all four dimensions should be addressed in your QA plan, functionality 
+testing
+and SEO can be tested automatically during development, so that will be the 
+focus of
+this chapter.
+
+Logic Versus Presentation
+
+Broadly speaking, in your website, there are two “realms”: logic (often called 
+“business
+logic,” a term I eschew because of its bias toward commercial endeavor) and 
+presenta‐
+tion. You can think of your website’s logic existing in kind of a pure 
+intellectual domain.
+For example, in our Meadowlark Travel scenario, there might be a rule that a 
+customer
+must possess a valid driver’s license before renting a scooter. This is a very 
+simple data-
+based rule: for every scooter reservation, the user needs a valid driver’s 
+license. The
+presentation of this is disconnected. Perhaps it’s just a checkbox on the final 
+form of the
+order page, or perhaps the customer has to provide a valid driver’s license 
+number, which
+is validated by Meadowlark Travel. It’s an important distinction, because 
+things should
+be as clear and simple as possible in the logic domain, whereas the 
+presentation can be
+as complicated or as simple as it needs to be. The presentation is also subject 
+to usability
+and aesthetic concerns, where the business domain is not.
+
+Whenever possible, you should seek a clear delineation between your logic and 
+pre‐
+sentation. There are many ways to do that, and in this book, we will be 
+focusing on
+encapsulating logic in JavaScript modules. Presentation, on the other hand, 
+will be a
+combination of HTML, CSS, multimedia, JavaScript, and frontend libraries like 
+jQuery.
+
+The Types of Tests
+
+The type of testing we will be considering in this book falls into two broad 
+categories:
+unit testing and integration testing (I am considering “system testing” to be a 
+type of
+integration testing). Unit testing is very fine-grained, testing single 
+components to make
+sure    they function properly, whereas integration testing tests the 
+interaction between
+multiple components, or even the whole system.
+
+Logic Versus Presentation    |    39
+
+
+In general, unit testing is more useful and appropriate for logic testing 
+(although we
+will see some instances where it is used in presentation code as well). 
+Integration testing
+is useful in both realms.
+
+Overview of QA Techniques
+
+In this book, we will be using the following techniques and software to 
+accomplish
+thorough testing:
+
+Page testing
+
+“Page testing,” as the name implies, tests the presentation and frontend 
+functionality
+of a page. This can involve both unit and integration testing. We will be using 
+Mocha
+to achieve this.
+
+Cross-page testing
+
+Cross-page testing involves testing functionality that requires navigation from 
+one
+page to another. For example, the checkout process in an ecommerce site usually
+spans multiple pages. Since this kind of testing inherently involves more than 
+one
+component, it is generally considered integration testing. We will be using Zom‐
+bie.js        for this.
+
+Logic testing
+
+Logic testing will execute unit and integration tests against our logic domain. 
+It will
+be testing only JavaScript, disconnected from any presentation functionality.
+
+Linting
+
+Linting isn’t about finding errors, but potential errors. The general concept 
+of linting
+is that it identifies areas that could represent possible errors, or fragile 
+constructs
+that could lead to errors in the future. We will be using JSHint for linting.
+
+Link checking
+
+Link checking (making sure there are no broken links on your site) falls into 
+the
+category of “low-hanging fruit.” It may seem overkill on a simple project, but 
+simple
+projects have a way of becoming complicated projects, and broken links will 
+happen.
+Better to work link checking into your QA routine early. Link checking falls 
+under
+the category of unit testing (a link is either valid or invalid). We will be 
+using Link‐
+Checker for this.
+
+Running Your Server
+
+All of the techniques in this chapter assume your website is running. So far, 
+we’ve been
+running our website manually, with the command node meadowlark.js. This techni‐
+que  has the advantage of simplicity, and I usually have a dedicated window on 
+the
+desktop for that purpose. That’s not your only option, however. If you find 
+yourself
+forgetting to restart your website when you make JavaScript changes, you might 
+want
+
+
+to look into a monitor utility that will automatically restart your server when 
+it detects
+changes in JavaScript. nodemon is very popular, and there’s also a Grunt 
+plugin. You
+will     be learning more about Grunt at the end of this chapter. For now, I 
+recommend just
+having your app always running in a different window.
+
+Page Testing
+
+My recommendation for page testing is that you actually embed tests in the page 
+it‐
+self. The advantage of this is that while you’re working on a page, you can 
+immediately
+spot any errors as you load it in a browser. Doing this will require a little 
+setup, so let’s
+get started.
+
+The first thing we’ll need is a test framework. We’ll be using Mocha. First, we 
+add the
+package to the project:
+
+npm install --save-dev mocha
+
+Note that we used --save-dev instead of --save; this tells npm to list this 
+package in
+the development dependencies instead of the runtime dependencies. This will 
+reduce
+the number of dependencies the project has when we deploy live instances of the 
+website.
+
+Since we’ll be running Mocha in the browser, we need to put the Mocha resources 
+in
+the public folder so it will be served to the client. We’ll put these in a 
+subdirectory, public/
+vendor:
+
+mkdir public/vendor
+
+cp node_modules/mocha/mocha.js public/vendor
+cp node_modules/mocha/mocha.css public/vendor
+
+It’s a good idea to put third-party libraries that you are using in a
+special directory, like vendor. This makes it easier to separate what
+code  you’re  responsible  for  testing  and  modifying,  and  what  code
+should be hands off.
+
+Tests usually require a function called assert (or expect). This is available 
+in the Node
+framework, but not inherently in a browser, so we’ll be using the Chai 
+assertion library:
+
+npm install --save-dev chai
+
+cp node_modules/chai/chai.js public/vendor
+
+Now that we have the necessary files, we can modify the Meadowlark Travel 
+website to
+allow running tests. The catch is, we don’t want the tests to always be there: 
+not only
+will it slow down your website, but your users don’t want to see the results of 
+tests! Tests
+should be disabled by default, but it should be very easy to enable them. To 
+meet both
+of these goals, we’re going to use a URL parameter to turn on tests. When we’re 
+done,
+
+
+going  to  http://localhost:3000  will  load  the  home  page,  and  
+http://localhost:3000?
+test=1 will load the home page complete with tests.
+
+First, we’re going to use some middleware to detect test=1 in the querystring. 
+It must
+appear before we define any routes in which we wish to use it:
+
+app.use(function(req, res, next){
+
+res.locals.showTests = app.get('env') !== 'production' &&
+req.query.test === '1';
+
+next();
+
+});
+
+// routes go here....
+
+The specifics about this bit of code will become clear in later chapters; what 
+you need
+to know for right now is that if test=1 appears in the querystring for any page 
+(and
+we’re not running on a production server), the property res.locals.showTests 
+will
+set to be true. The res.locals object is part of the context that will be 
+passed to views
+(this will be explained in more detail in Chapter 7).
+
+Now we can modify views/layouts/main.handlebars to conditionally include the 
+test
+framework. Modify the <head> section:
+
+<head>
+
+<title>Meadowlark Travel</title>
+
+{{#if showTests}}
+
+<link rel="stylesheet" href="/vendor/mocha.css">
+
+{{/if}}
+
+<script src="//code.jquery.com/jquery-2.0.2.min.js"></script>
+
+</head>
+
+We’re linking in jQuery here because, in addition to using it as our primary DOM
+manipulation library for the site, we can use it to make test assertions. 
+You’re free to use
+whatever library you like (or none at all), but I recommend jQuery. You’ll 
+often hear
+that JavaScript libraries should be loaded last, right before the closing 
+</body> tag. There
+is good reason for this, and we will learn some techniques to make this 
+possible, but for
+now, we’re going to include jQuery early.1
+
+Then, right before the closing </body> tag:
+
+{{#if showTests}}
+
+<div id="mocha"></div>
+
+<script src="/vendor/mocha.js"></script>
+
+<script src="/vendor/chai.js"></script>
+
+<script>
+
+mocha.ui('tdd');
+
+var assert = chai.assert;
+
+</script>
+
+1.  Remember the first principle of performance tuning: profile first, then 
+optimize.
+
+
+<script src="/qa/tests-global.js"></script>
+
+{{#if pageTestScript}}
+
+<script src="{{pageTestScript}}"></script>
+
+
+</body>
+
+{{/if}}
+
+{{/if}}
+
+<script>mocha.run();</script>
+
+Note that Mocha and Chai get included, as well as a script called 
+/qa/global-tests.js. As
+the name implies, these are tests that will be run on every page. A little 
+farther down,
+we optionally link in page-specific tests, so that you can have different tests 
+for different
+pages. We’ll start with the global tests, and then add page-specific tests. 
+Let’s start with
+a single, simple test: making sure the page has a valid title. Create the 
+directory public/
+qa and create a file tests-global.js in it:
+
+suite('Global Tests', function(){
+
+test('page has a valid title', function(){
+assert(document.title && document.title.match(/\S/) &&
+
+document.title.toUpperCase() !== 'TODO');
+
+
+});
+
+});
+
+Mocha supports multiple “interfaces,” which control the style of your
+tests. The default interface, behavior-driven development (BDD), is
+tailored to make you think in a behavioral sense. In BDD, you de‐
+scribe components and their behaviors, and the tests then verify those
+behaviors. However, I find that very often, there are tests that don’t
+fit      this model, and then the BDD language just looks strange. Test-
+driven  development  (TDD)  is  more  matter-of-fact:  you  describe
+suites of tests and tests within the suite. There’s nothing to stop you
+from using both interfaces in your tests, but then it becomes a con‐
+figuration hassle. For that reason, I’ve opted to stick with TDD in this
+book.    If you prefer BDD, or mixing BDD and TDD, by all means
+do  so.
+
+Go ahead and run the site now. Visit the home page and examine the source: 
+you’ll see
+no evidence of test code. Now, add test=1 to the querystring 
+(http://localhost:3000/?
+test=1), and you’ll see the tests run on the page. Any time you want to test 
+the site, all
+you have to do is add test=1 to the querystring!
+
+Now let’s add a page-specific test. Let’s say that we want to ensure that a 
+link to the yet-
+to-be-created Contact page always exists on the About page. We’ll create a file 
+called
+public/qa/tests-about.js:
+
+suite('"About" Page Tests', function(){
+
+test('page should contain link to contact page', function(){
+assert($('a[href="/contact"]').length);
+
+
+});
+
+});
+
+We have one last thing to do: specify in the route which page test file the 
+view should
+be using. Modify the About page route in meadowlark.js:
+
+app.get('/about', function(req, res) {
+res.render('about', {
+
+fortune: fortune.getFortune(),
+pageTestScript: '/qa/tests-about.js'
+
+} );
+
+});
+
+Load the About page with test=1 in the querystring: you’ll see two suites and 
+one failure!
+Now add a link to the nonexistent Contact page, and you’ll see the test become 
+successful
+when you reload.
+
+Depending on the nature of your site, you may want this to be more automatic. 
+For
+example, if your route was /foo, you could automatically set the page-specific 
+tests to
+be /foo/tests-foo.js. The downside of this approach is that you lose 
+flexibility. For exam‐
+ple, if you have multiple routes that point to the same view, or even very 
+similar content,
+you might want to use the same test file.
+
+Let’s resist the temptation to add more tests now: those will come as we 
+progress through
+the book. For now, we have the basic framework necessary to add global and page-
+specific tests.
+
+Cross-Page Testing
+
+Cross-page testing is a little more challenging, because you need to be able to 
+control
+and observe the browser itself. Let’s look at an example of a cross-page 
+testing scenario.
+Let’s say your website has a Request Group Rate page that contains a contact 
+form. The
+marketing  department  wants  to  know  what  page  the  customer  was  last  
+on  before
+following a link to Request Group Rate—they want to know whether the customer 
+was
+viewing the Hood River tour or Oregon Coast retreat. Hooking this up will 
+require some
+hidden form fields and JavaScript, and testing is going to involve going to a 
+page, then
+clicking  Request  Group  Rate  and  verifying  that  the  hidden  field  is  
+populated
+appropriately.
+
+Let’s set up this scenario, and then see how we can test it. First, we’ll 
+create a tour page,
+
+views/tours/hood-river.handlebars:
+
+<h1>Hood River Tour</h1>
+
+<a class="requestGroupRate"
+
+href="/tours/request-group-rate">Request Group Rate.</a>
+
+And a quote page, views/tours/request-group-rate.handlebars:
+
+
+<h1>Request Group Rate</h1>
+
+<form>
+
+
+</form>
+
+<input type="hidden" name="referrer">
+
+Name: <input type="text" id="fieldName" name="name"><br>
+Group size: <input type="text" name="groupSize"><br>
+Email: <input type="email" name="email"><br>
+
+<input type="submit" value="Submit">
+
+<script>
+
+$(document).ready(function(){
+
+$('input[name="referrer"]').val(document.referrer);
+
+});
+
+</script>
+
+Then we’ll create routes for these pages in meadowlark.js:
+
+app.get('/tours/hood-river', function(req, res){
+res.render('tours/hood-river');
+
+});
+
+app.get('/tours/request-group-rate', function(req, res){
+res.render('tours/request-group-rate');
+
+});
+
+Now that we have something to test, we need some way to test it, and this is 
+where things
+get complicated. To test this functionality, we really need a browser or 
+something a lot
+like a browser. Obviously, we can do it by hand by going to the 
+/tours/hood-river page
+in  a browser, then clicking on the Request Group Rate link, then inspecting 
+the hidden
+form element to see that it’s correctly populated with the referring page, but 
+that’s a lot
+of work—we want a way to automate that.
+
+What we’re looking for is often called a headless browser: meaning that the 
+browser
+doesn’t actually need to display something on the screen, necessarily, it just 
+has to behave
+like     a browser. Currently, there are three popular solutions for this 
+problem: Selenium,
+PhantomJS, and Zombie. Selenium is incredibly robust, with extensive testing 
+support,
+but configuring it is beyond the scope of this book. PhantomJS is a great 
+project and
+actually provides a headless WebKit browser (the same engine used in Chrome and
+Safari) so, like Selenium, it represents a very high level of realism. However, 
+it doesn’t
+yet provide the simple test assertions that we’re looking for, which leaves us 
+with Zombie.
+
+Zombie doesn’t use an existing browser engine, so it isn’t suitable for testing 
+browser
+features, but it’s great for testing basic functionality, which is what we’re 
+looking for.
+Unfortunately, Zombie doesn’t currently support a Windows installation (it used 
+to be
+possible  through  Cygwin).  People  have  gotten  it  to  work,  however,  and 
+ there’s
+information  on  the  Zombie  home  page.  I  have  made  an  effort  to  make  
+this  book
+platform-agnostic, but there currently isn’t a Windows solution for simple 
+headless
+browser         tests. If you’re a Windows developer, I encourage you to check 
+out Selenium
+or PhantomJS: it will be a steeper learning curve, but these projects have a 
+lot to offer.
+
+First, install Zombie:
+
+
+npm install --save-dev zombie
+
+Now we’ll create a new directory called simply qa (distinct from public/qa). In 
+that
+directory, we’ll create a file, qa/tests-crosspage.js:
+
+var Browser = require('zombie'),
+
+assert = require('chai').assert;
+
+var browser;
+
+suite('Cross-Page Tests', function(){
+setup(function(){
+
+browser = new Browser();
+
+});
+
+test('requesting a group rate quote     from the hood river tour page' +
+'should populate the referrer field', function(done){
+
+var referrer = 'http://localhost:3000/tours/hood-river';
+browser.visit(referrer, function(){
+
+browser.clickLink('.requestGroupRate', function(){
+assert(browser.field('referrer').value
+
+=== referrer);
+
+
+});
+
+});
+
+});
+
+done();
+
+test('requesting a group rate from the oregon coast tour page should ' +
+'populate the referrer field', function(done){
+
+var referrer = 'http://localhost:3000/tours/oregon-coast';
+browser.visit(referrer, function(){
+
+browser.clickLink('.requestGroupRate', function(){
+assert(browser.field('referrer').value
+
+=== referrer);
+
+
+});
+
+});
+
+});
+
+done();
+
+test('visiting the "request group rate" page dirctly should result ' +
+'in an empty referrer field', function(done){
+
+browser.visit('http://localhost:3000/tours/request-group-rate',
+
+function(){
+
+assert(browser.field('referrer').value === '');
+done();
+
+});
+
+});
+
+});
+
+setup takes a function that will get executed by the test framework before each 
+test is
+run: this is where we create a new browser instance for each test. Then we have 
+three
+
+
+tests. The first two check that the referrer is populated correctly if you’re 
+coming from
+a product page. The browser.visit method will actually load a page; when the 
+page
+has been loaded, the callback function is invoked. Then the browser.clickLink 
+method
+looks for a link with the requestGroupRate class and follows it. When the 
+linked page
+loads, the callback function is invoked, and now we’re on the Request Group 
+Rate page.
+All that remains to be done is to assert that the hidden “referrer” field 
+correctly matches
+the original page we visited. The browser.field method returns a DOM Element
+object, which has a value property. The last test simply ensures that the 
+referrer is blank
+if    the Request Group Rate page is visited directly.
+
+Before we run the tests, you’ll have to start the server (node meadowlark.js). 
+You’ll
+want to do that in a different window so you can see any console errors. Then 
+run the
+test   and   see   how   we   did   (make   sure   you   have   Mocha   
+installed   globally:
+npm install -g mocha):
+
+mocha -u tdd -R spec qa/tests-crosspage.js 2>/dev/null
+
+We’ll see that one of our tests is failing…it failed for the Oregon Coast Tour 
+page, which
+should be no surprise, since we haven’t added that page yet. But the other two 
+tests are
+passing! So our test is working; go ahead and add an Oregon Coast Tour page, 
+and all
+of      the tests will pass. Note that in the previous command, I specified 
+that our interface
+is TDD (it defaults to BDD) and to use a reporter called spec. The spec 
+reporter provides
+a bit more information than the default reporter. (Once you have hundreds of 
+tests, you
+might want to switch back to the default reporter.) Finally, you’ll note that 
+we’re dumping
+the error output (2>/dev/null). Mocha reports all of the stack traces for 
+failed tests. It
+can be useful information, but usually you just want to see what tests are 
+passing and
+what tests are failing. If you need more information, leave the 2>/dev/null off 
+and you
+will see the error detail.
+
+One advantage of writing your tests before you implement features is
+that (if your tests are correct), they will all start out failing. Not only
+does this give you satisfaction as you see your tests start to pass, but
+it’s additional assurance that the test is correct. If your test starts out
+passing  before  you  even  implement  a  feature,  the  test  is  probably
+broken. This is sometimes called “red light, green light” testing.
+
+Logic Testing
+
+We’ll also be using Mocha for logic testing. For now, we have only one tiny bit 
+of func‐
+tionality (the fortune generator), so setting this up will be pretty easy. 
+Also, since we
+only have one component, we don’t have enough for integration tests, so we’ll 
+just be
+adding unit tests. Create the file qa/tests-unit.js:
+
+
+var fortune = require('../lib/fortune.js');
+
+var expect = require('chai').expect;
+suite('Fortune cookie tests', function(){
+
+test('getFortune() should return a fortune', function(){
+expect(typeof fortune.getFortune() === 'string');
+
+});
+
+});
+
+Now we can just run Mocha against this new test suite:
+
+mocha -u tdd -R spec qa/tests-unit.js
+
+Not very exciting! But it provides the template that we will be using 
+throughout the rest
+of this book.
+
+Testing entropic functionality (functionality that is random) comes
+with its own challenges. Another test we could add for our fortune
+cookie generator would be a test to make sure that it returns a ran‐
+dom fortune cookie. But how do you know if something is random?
+One approach is to get a large number of fortunes—a thousand, for
+example—and then measure the distribution of the responses. If the
+function     is properly random, no one response will stand out. The
+downside of this approach is that it’s nondeterministic: it’s possible
+(but unlikely) to get one fortune 10 times more frequently than any
+other fortune. If that happened, the test could fail (depending on how
+aggressive you set the threshold of what is “random”), but that might
+not actually indicate that the system being tested is failing; it’s just a
+consequence of testing entropic systems. In the case of our fortune
+generator,   it would be reasonable to generate 50 fortunes, and expect
+at      least three different ones. On the other hand, if we were develop‐
+ing a random source for a scientific simulation or security compo‐
+nent, we would probably want to have much more detailed tests. The
+point is that testing entropic functionality is difficult and requires
+more thought.
+
+Linting
+
+A good linter is like having a second set of eyes: it will spot things that 
+will slide right
+past our human brains. The original JavaScript linter is Douglas Crockford’s 
+JSLint. In
+2011, Anton Kovalyov forked JSLint, and JSHint was born. Kovalyov found that 
+JSLint
+was  becoming  too  opinionated,  and  he  wanted  to  create  a  more  
+customizable,
+community-developed JavaScript linter. While I agree with almost all of 
+Crockford’s
+
+
+linting suggestions, I prefer the ability to tailor my linter, and for that 
+reason, I recom‐
+mend JSHint.2
+
+JSHint is very easy to get via npm:
+
+npm install -g jshint
+
+To run it, simply invoke it with the name of a source file:
+
+jshint meadowlark.js
+
+If you’ve been following along, JSHint shouldn’t have any complaints about 
+meadow‐
+lark.js. To see the kind of thing that JSHint will save you from, put the 
+following line in
+meadowlark.js, and run JSHint on it:
+
+if( app.thing == null ) console.log( 'bleat!' );
+
+(JSHint will complain about using == instead of ===, whereas JSLint would 
+additionally
+complain about the lack of curly brackets.)
+
+Consistent use of a linter will make you a better programmer: I promise that. 
+Given
+that, wouldn’t it be nice if your linter integrated into your editor and you 
+were informed
+of potential errors as soon as you made them? Well, you’re in luck. JSHint 
+integrates
+into many popular editors.
+
+Link Checking
+
+Checking for dead links doesn’t seem very glamorous, but it can have a huge 
+impact on
+how your website is ranked by search engines. It’s an easy enough thing to 
+integrate into
+your workflow, so it’s foolish not to.
+
+I recommend LinkChecker; it’s cross-platform, and it offers a command-line as 
+well as
+a graphical interface. Just install it and point it at your home page:
+
+linkchecker http://localhost:3000
+
+Our site doesn’t have very many pages yet, so LinkChecker should whip right 
+through
+it.
+
+Automating with Grunt
+
+The QA tools we’re using—test suites, linting, link checkers—provide value only 
+if
+they’re actually used, and this is where many a QA plan withers and dies. If 
+you have to
+remember all the components in your QA toolchain and all the commands to run 
+them,
+the chances that you (or other developers you work with) will reliably use them 
+go down
+considerably.  If  you’re  going  to  invest  the  time  required  to  come  up 
+ with  a
+
+2.  Nicholas Zakas’s ESLint is also an excellent choice.
+
+
+comprehensive QA toolchain, isn’t it worth spending a little time automating 
+the process
+so that the toolchain will actually be used?
+
+Fortunately, a tool called Grunt makes automating these tasks quite easy. We’ll 
+be rolling
+up our logic tests, cross-page tests, linting, and link checking into a single 
+command
+with Grunt. Why not page tests? This is possible using a headless browser like 
+Phan‐
+tomJS or Zombie, but the configuration is complicated and beyond the scope of 
+this
+book. Furthermore, browser tests are usually designed to be run as you work on 
+an
+individual page, so there isn’t quite as much value in rolling them together 
+with the rest
+of      your tests.
+
+First, you’ll need to install the Grunt command line, and Grunt itself:
+
+sudo npm install -g grunt-cli
+npm install --save-dev grunt
+
+Grunt relies on plugins to get the job done (see the Grunt plugins list for all 
+available
+plugins). We’ll need plugins for Mocha, JSHint, and LinkChecker. As I write 
+this, there’s
+no plugin for LinkChecker, so we’ll have to use a generic plugin that executes 
+arbitrary
+shell commands. So first we install all the necessary plugins:
+
+npm install --save-dev grunt-cafe-mocha
+
+npm install --save-dev grunt-contrib-jshint
+npm install --save-dev grunt-exec
+
+Now that all the plugins have been installed, create a file in your project 
+directory called
+
+Gruntfile.js:
+
+module.exports = function(grunt){
+
+// load plugins
+
+[
+
+'grunt-cafe-mocha',
+'grunt-contrib-jshint',
+'grunt-exec',
+
+].forEach(function(task){
+
+grunt.loadNpmTasks(task);
+
+});
+
+// configure plugins
+
+grunt.initConfig({
+
+cafemocha: {
+
+all: { src: 'qa/tests-*.js', options: { ui: 'tdd' }, }
+
+},
+
+jshint: {
+
+app: ['meadowlark.js', 'public/js/**/*.js',
+'lib/**/*.js'],
+
+qa: ['Gruntfile.js', 'public/qa/**/*.js', 'qa/**/*.js'],
+
+},
+
+exec: {
+
+linkchecker:
+
+
+{ cmd: 'linkchecker http://localhost:3000' }
+
+},
+
+});
+
+// register tasks
+
+grunt.registerTask('default', ['cafemocha','jshint','exec']);
+
+};
+
+In the section “load plugins,” we’re specifying which plugins we’ll be using, 
+which are
+the same plugins we installed via npm. Because I don’t like to have to type 
+loadNpm
+Tasks over and over again (and once you start relying on Grunt more, believe 
+me, you
+will be adding more plugins!), I choose to put them all in an array and loop 
+over them
+with forEach.
+
+In the “configure plugins” section, we have to do a little work to get each 
+plugin to work
+properly.  For  the  cafemocha plugin  (which  will  run  our  logic  and  
+cross-browser
+tests),  we  have  to  tell  it  where  our  tests  are.  We’ve  put  all  of  
+our  tests  in  the  qa
+subdirectory, and named them with a tests- prefix. Note that we have to specify 
+the tdd
+interface. If you were mixing TDD and BDD, you would have to have some way to
+separate them. For example, you could use prefixes tests-tdd- and tests-bdd-.
+
+For JSHint, we have to specify what JavaScript files should be linted. Be 
+careful here!
+Very often, dependencies won’t pass JSHint cleanly, or they will be using 
+different JSHint
+settings, and you’ll be inundated with JSHint errors for code that you didn’t 
+write. In
+particular, you want to make sure the node_modules directory isn’t included, as 
+well as
+any  vendor  directories.  Currently,  grunt-contrib-jshint doesn’t  allow  you 
+ to  ex‐
+clude files, only include them. So we have to specify all the files we want to 
+include. I
+generally break the files I want to include into two lists: the JavaScript that 
+actually makes
+up     our application or website and the QA JavaScript. It all gets linted, 
+but breaking it
+up like this makes it a little easier to manager. Note that the wildcard /**/ 
+means “all
+files in all subdirectories.” Even though we don’t have a public/js directory 
+yet, we will.
+Implicitly excluded are the node_modules and public/vendor directories.
+
+Lastly, we configure the grunt-exec plugin to run LinkChecker. Note that we’ve 
+hard‐
+coded this plugin to use port 3000; this might be a good thing to parameterize, 
+which
+I’ll leave as an exercise for the reader.3
+
+Finally, we “register” the tasks: this puts individual plugins into named 
+groups. A spe‐
+cially named task, default, will be the task that gets run by default, if you 
+just type grunt.
+
+3.  See the grunt.option documentation to get started.
+
+
+Now all you have to do is make sure a server is running (in the background or 
+in a
+different window), and run Grunt:
+
+grunt
+
+All of your tests will run (minus the page tests), all your code gets linted, 
+and all your
+links are checked! If any component fails, Grunt will terminate with an error 
+message;
+otherwise, it will report “Done, without errors.” There’s nothing quite so 
+satisfying as
+seeing that message, so get in the habit of running Grunt before you commit!
+
+Continuous Integration (CI)
+
+I’ll leave you with another extremely useful QA concept: continuous 
+integration. It’s
+especially important if you’re working on a team, but even if you’re working on 
+your
+own, it can provide some discipline that you might otherwise lack. Basically, 
+CI runs
+some or all of your tests every time you contribute code to a shared server. If 
+all of the
+tests pass, nothing usually happens (you may get an email saying “good job,” 
+depending
+on how your CI is configured). If, on the other hand, there are failures, the 
+consequences
+are usually more…public. Again, it depends on how you configure your CI, but 
+usually
+the entire team gets an email saying that you “broke the build.” If your 
+integration master
+is really sadistic, sometimes your boss is also on that email list! I’ve even 
+known teams
+that set up lights and sirens when someone breaks the build, and in one 
+particularly
+creative office, a tiny robotic foam missile launcher fired soft projectiles at 
+the offending
+developer! It’s a powerful incentive to run your QA toolchain before 
+committing.
+
+It’s beyond the scope of this book to cover installing and configuring a CI 
+server, but a
+chapter on QA wouldn’t be complete without mentioning it. Currently, the most 
+popular
+CI server for Node projects is Travis CI. Travis CI is a hosted solution, which 
+can be
+very appealing (it saves you from having to set up your own CI server). If 
+you’re using
+GitHub, it offers excellent integration support. Jenkins, a well-established CI 
+server, now
+has a Node plugin. JetBrains’s excellent TeamCity now offers Node plugins.
+
+If you’re working on a project on your own, you may not get much benefit from a 
+CI
+server, but if you’re working on a team or an open source project, I highly 
+recommend
+looking into setting up CI for your project.
+
+
+CHAPTER 6
+
+The Request and Response Objects
+
+When you’re building a web server with Express, most of what you’ll be doing 
+starts
+with a request object and ends with a response object. These two objects 
+originate in
+Node and are extended by Express. Before we delve into what these objects offer 
+us, let’s
+establish a little background on how a client (a browser, usually) requests a 
+page from
+a  server, and how that page is returned.
+
+The Parts of a URL
+
+Protocol
+
+The protocol determines how the request will be transmitted. We will be dealing
+exclusively with http and https. Other common protocols include file and ftp.
+
+Host
+
+The host identifies the server. Servers on your computer (localhost) or a local 
+net‐
+work may simply be one word, or it may be a numeric IP address. On the Internet,
+the host will end in a top-level domain (TLD) like .com or .net. Additionally, 
+there
+may be subdomains, which prefix the hostname. www is a very common subdo‐
+main, though it can be anything. Subdomains are optional.
+
+
+Port
+
+Each server has a collection of numbered ports. Some port numbers are “special,”
+like 80 and 443. If you omit the port, port 80 is assumed for HTTP and 443 for
+HTTPS. In general, if you aren’t using port 80 or 443, you should use a port 
+number
+greater than 1023.1  It’s very common to use easy-to-remember port numbers like
+3000, 8080, and 8088.
+
+Path
+
+The path is generally the first part of the URL that your app cares about (it 
+is possible
+to make decisions based on protocol, host, and port, but it’s not good 
+practice). The
+path should be used to uniquely identify pages or other resources in your app.
+
+Querystring
+
+The querystring is an optional collection of name/value pairs. The querystring
+starts with a question mark (?), and name/value pairs are separated by 
+ampersands
+(&). Both names and values should be URL encoded. JavaScript provides a built-in
+function to do that: encodeURIComponent. For example, spaces will be replaced 
+with
+plus signs (+). Other special characters will be replaced with numeric character
+references.
+
+Fragment
+
+The fragment (or hash) is not passed to the server at all: it is strictly for 
+use by the
+browser. It is becoming increasingly common for single-page applications or 
+AJAX-
+heavy applications to use the fragment to control the application. Originally, 
+the
+fragment’s sole purpose was to cause the browser to display a specific part of 
+the
+document, marked by an anchor tag (<a id="chapter06">).
+
+HTTP Request Methods
+
+The HTTP protocol defines a collection of request methods (often referred to as 
+HTTP
+verbs) that a client uses to communicate with a server. Far and away, the most 
+common
+methods are GET and POST.
+
+When you type a URL into a browser (or click a link), the browser issues an 
+HTTP GET
+request to the server. The important information passed to the server is the 
+URL path
+and querystring. The combination of method, path, and querystring is what your 
+app
+uses to determine how to respond.
+
+For a website, most of your pages will respond to GET requests. POST requests 
+are usually
+reserved for sending information back to the server (form processing, for 
+example). It’s
+quite common for POST requests to respond with the same HTML as the 
+corresponding
+GET request after the server has processed any information included in the 
+request (like
+
+1.  Ports 0-1023 are “well-known ports.”
+
+
+a form). Browsers will exclusively use the GET and POST methods when 
+communicating
+with your server (if they’re not using AJAX).
+
+Web services, on the other hand, often get more creative with the HTTP methods 
+used.
+For example, there’s an HTTP method called DELETE that is useful for, well, an 
+API call
+that deletes things.
+
+With Node and Express, you are fully in charge of what methods you respond to 
+(though
+some of the more esoteric ones are not very well supported). In Express, you’ll 
+usually
+be writing handlers for specific methods.
+
+Request Headers
+
+The URL isn’t the only thing that’s passed to the server when you navigate to a 
+page.
+Your browser is sending a lot of “invisible” information every time you visit a 
+website.
+I’m not talking about spooky personal information (though if your browser is 
+infected
+by malware, that can happen). The browser will tell the server what language it 
+prefers
+to receive the page in (for example, if you download Chrome in Spain, it will 
+request
+the Spanish version of pages you visit, if they exist). It will also send 
+information about
+the “user agent” (the browser, operating system, and hardware) and other bits 
+of infor‐
+mation. All this information is sent as a request header, which is made 
+available to you
+through the request object’s headers property. If you’re curious to see the 
+information
+your browser is sending, you can create a very simple Express route to display 
+that
+information:
+
+app.get('/headers', function(req,res){
+res.set('Content-Type','text/plain');
+var                                      s = '';
+
+for(var name in req.headers) s += name + ': ' + req.headers[name] + '\n';
+res.send(s);
+
+});
+
+Response Headers
+
+Just as your browser sends hidden information to the server in the form of 
+request
+headers, when the server responds, it also sends information back that is not 
+necessarily
+rendered or displayed by the browser. The information typically included in 
+response
+headers is metadata and server information. We’ve already seen the Content-Type
+header, which tells the browser what kind of content is being transmitted 
+(HTML, an
+image, CSS, JavaScript, etc.). Note that the browser will respect the 
+Content-Type header
+regardless of what the URL path is. So you could serve HTML from a path of 
+/image.jpg
+or      an image from a path of /text.html. (There’s no legitimate reason to do 
+this; it’s just
+important to understand that paths are abstract, and the browser uses 
+Content-Type to
+determine how to render content.) In addition to Content-Type, headers can 
+indicate
+whether the response is compressed and what kind of encoding it’s using. 
+Response
+
+Request Headers    |    55
+
+
+headers can also contain hints for the browser about how long it can cache the 
+resource.
+This is an important consideration for optimizing your website, and we’ll be 
+discussing
+that in detail in Chapter 16. It is also common for response headers to contain 
+some
+information about the server, indicating what type of server it is, and 
+sometimes even
+details about the operating system. The downside about returning server 
+information
+is  that it gives hackers a starting point to compromise your site. Extremely 
+security-
+conscious servers often omit this information, or even provide false 
+information.
+Disabling Express’s default X-Powered-By header is easy:
+
+app.disable('x-powered-by');
+
+If you want to see the response headers, they can be found in your browser’s 
+developer
+tools. To see the response headers in Chrome, for example:
+
+1.  Open the JavaScript console.
+
+2.  Click the Network tab.
+
+3.  Reload the page.
+
+4.  Pick the HTML from the list of requests (it will be the first one).
+
+5.  Click the Headers tab; you will see all response headers.
+
+Internet Media Types
+
+The Content-Type header is critically important: without it, the client would 
+have to
+painfully guess how to render the content. The format of the Content-Type 
+header is
+an Internet media type, which consists of a type, subtype, and optional 
+parameters. For
+example, text/html; charset=UTF-8 specifies a type of “text,” a subtype of 
+“html,” and
+a character encoding of UTF-8. The Internet Assigned Numbers Authority maintains
+an official list of Internet media types. Often, you will hear “content type,” 
+“Internet
+media type,” and “MIME type” used interchangeably. MIME (Multipurpose Internet
+Mail Extensions) was a precursor of Internet media types and, for the most 
+part, is
+equivalent.
+
+Request Body
+
+In addition to the request headers, a request can have a body (just like the 
+body of a
+response is the actual content that’s being returned). Normal GET requests 
+don’t have
+bodies, but POST requests usually do. The most common media type for POST 
+bodies is
+application/x-www-form-urlencoded,  which  is  simply  encoded  name/value  
+pairs
+separated by ampersands (essentially the same format as a querystring). If the 
+POST
+needs to support file uploads, the media type is multipart/form-data, which is 
+a more
+complicated format. Lastly, AJAX requests can use application/json for the 
+body.
+
+
+Parameters
+
+The word “parameters” can mean a lot of things, and is often a source of 
+confusion. For
+any request, parameters can come from the querystring, the session (requiring 
+cookies;
+see Chapter 9), the request body, or the named routing parameters (which we’ll 
+learn
+more about in Chapter 14). In Node applications, the param method of the 
+request object
+munges all of these parameters together. For this reason, I encourage you to 
+avoid it.
+This commonly causes problems when a parameter is set to one thing in the 
+querystring
+and another one in the POST body or the session: which value wins? It can 
+produce
+maddening bugs. PHP is largely to blame for this confusion: in an effort to be 
+“conve‐
+nient,”        it munged all of these parameters into a variable called 
+$_REQUEST, and for some
+reason, people have thought it was a good idea ever since. We will learn about 
+dedicated
+properties that hold the various types of parameters, and I feel that that is a 
+much less
+confusing approach.
+
+The Request Object
+
+The request object (which is normally passed to a callback, meaning you can 
+name it
+whatever you want: it is common to name it req or request) starts its life as 
+an instance
+of http.IncomingMessage, a core Node object. Express adds additional 
+functionality.
+Let’s look at the most useful properties and methods of the request object (all 
+of these
+methods are added by Express, except for req.headers and req.url, which 
+originate
+in Node):
+
+req.params
+
+An array containing the named route parameters. We’ll learn more about this in
+Chapter 14.
+
+req.param(name)
+
+Returns the named route parameter, or GET or POST parameters. I recommend
+avoiding this method.
+
+req.query
+
+An object containing querystring parameters (sometimes called GET parameters)
+as name/value pairs.
+
+req.body
+
+An object containing POST parameters. It is so named because POST parameters are
+passed in the body of the REQUEST, not in the URL like querystring parameters. 
+To
+make req.body available, you’ll need middleware that can parse the body content
+type, which we will learn about in Chapter 10.
+
+Parameters    |    57
+
+
+req.route
+
+Information  about  the  currently  matched  route.  Primarily  useful  for  
+route
+debugging.
+
+req.cookies/req.signedCookies
+
+Objects containing containing cookie values passed from the client. See Chapter 
+9.
+
+req.headers
+
+The request headers received from the client.
+
+req.accepts([types])
+
+A convenience method to determine whether the client accepts a given type or 
+types
+(optional types can be a single MIME type, such as application/json, a comma-
+delimited list, or an array). This method is of primary interest to those 
+writing public
+APIs;     it is assumed that browsers will always accept HTML by default.
+
+req.ip
+
+The IP address of the client.
+
+req.path
+
+The request path (without protocol, host, port, or querystring).
+
+req.host
+
+A convenience method that returns the hostname reported by the client. This in‐
+formation can be spoofed and should not be used for security purposes.
+
+req.xhr
+
+A convenience property that returns true if the request originated from an AJAX
+call.
+
+req.protocol
+
+The protocol used in making this request (for our purposes, it will either be 
+http
+
+or https).
+
+req.secure
+
+A convenience property that returns true if the connection is secure. Equivalent
+to req.protocol==='https'.
+
+req.url/req.originalUrl
+
+A bit of a misnomer, these properties return the path and querystring (they do 
+not
+include protocol, host, or port). req.url can be rewritten for internal routing
+purposes, but req.originalUrl is designed to remain the original request and
+querystring.
+
+req.acceptedLanguages
+
+A convenience method that returns an array of the (human) languages the client
+prefers, in order. This information is parsed from the request header.
+
+
+The Response Object
+
+The response object (which is normally passed to a callback, meaning you can 
+name it
+whatever you want: it is common to name it res, resp, or response) starts its 
+life as an
+instance of http.ServerResponse, a core Node object. Express adds additional 
+func‐
+tionality. Let’s look at the most useful properties and methods of the response 
+object (all
+of these are added by Express):
+
+res.status(code)
+
+Sets the HTTP status code. Express defaults to 200 (OK), so you will have to use
+this method to return a status of 404 (Not Found) or 500 (Server Error), or any
+other status code you wish to use. For redirects (status codes 301, 302, 303, 
+and
+307), there is a method redirect, which is preferable.
+
+res.set(name, value)
+
+Sets a response header. This is not something you will normally be doing 
+manually.
+
+res.cookie(name, value, [options]), res.clearCookie(name, [options])
+
+Sets or clears cookies that will be stored on the client. This requires some 
+middle‐
+ware support; see Chapter 9.
+
+res.redirect([status], url)
+
+Redirects the browser. The default redirect code is 302 (Found). In general, you
+should minimize redirection unless you are permanently moving a page, in which
+case you should use the code 301 (Moved Permanently).
+
+res.send(body), res.send(status, body)
+
+Sends a response to the client, with an optional status code. Express defaults 
+to a
+content type of text/html, so if you want to change it to text/plain (for 
+example),
+you’ll  have  to  call  res.set('Content-Type', 'text/plain\') before  calling
+res.send. If body is an object or an array, the response is sent as JSON 
+instead (with
+the content type being set appropriately), though if you want to send JSON, I 
+rec‐
+ommend doing so explicitly by calling res.json instead.
+
+res.json(json), res.json(status, json)
+
+Sends JSON to the client with an optional status code.
+
+res.jsonp(json), res.jsonp(status, json)
+
+

@@ -106,8 +106,8 @@ with open("/home/krishna/Documents/ZipFileCompressor/Web_Development_with_Node_E
 compressed=""
 convert_LZ77(to_compress)
 res=list(set(compressed))
-# f=list(map(lambda x: (compressed.count(x),x),res))
-f=list(map(lambda x: (compressed.count(x),x),list(set(to_compress))))
+f=list(map(lambda x: (compressed.count(x),x),res))
+# f=list(map(lambda x: (compressed.count(x),x),list(set(to_compress))))
 tree=list(map(lambda x: (x[0],x[1],Tree(x[0],x[1])),f))
 _heapq.heapify(tree)
 root=construct(tree)
@@ -164,6 +164,6 @@ with open("/home/krishna/Documents/ZipFileCompressor/input3.bin","rb") as f:
     print(bin_array[-1],arr[-1],document[-3:-1])
     print(decoded[-10:-1],document[-10:-1])
     print(decoded==document)
-
+    print(document[:100])
 
 
