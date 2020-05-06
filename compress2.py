@@ -63,30 +63,31 @@ def encode(compressed,codes):
     document=''.join(list(map(lambda x:codes[x],compressed)))
     return document
 
+#Write the encoding information(character:huff-code) to the beginning of the output file
 def code_write(codes):
-    # op1=sys.stdout
-    # sys.stdout=op
-    # # print(codes)
-    # for char in codes:
-    #     # try:
-    #     print(char,codes[char])
-    # sys.stdout=op1
-    to_write=""
+    to_write=""                                        #Contains concatenation of codes of all characters(00010100....)
     for char in codes:
-        sys.stdout.write(bytes(char,encoding="utf-8"))
-        sys.stdout.write(bytes([len(codes[char])]))
+        sys.stdout.write(bytes(char,encoding="utf-8")) #Write the character encoding of char in uf-8 format to the binary file
+        sys.stdout.write(bytes([len(codes[char])]))    #Write the length of the code of the character to the file
         to_write+=codes[char]
     sys.stdout.write(bytes("\n",encoding="utf-8"))
+    sys.stdout.write(bytes([0]))
+    # sys.stdout.write(bytes("\n",encoding="utf-8"))
     i=0
-    bin_array=array("B")
+    bin_array=array("B")                               #Array to store the codes encoded as integers who binary representation is {to_write}
     while(i<len(to_write)):
         bin_array.append(int(to_write[i:i+8],2))
         i+=8
-    sys.stdout.write(bytes([len(bin_array)]))
+    sys.stdout.write(bytes([len(bin_array)]))          #Write length of the bin_array
+    sys.stdout.write(bytes("\n",encoding="utf-8"))     
+    sys.stdout.write(bytes(bin_array))                 #Write the bin_array to the file
     sys.stdout.write(bytes("\n",encoding="utf-8"))
-    sys.stdout.write(bytes(bin_array))
-    sys.stdout.write(bytes("\n",encoding="utf-8"))
-    sys.stdout.write(bytes([len(to_write)]))
+    op1=sys.stdout
+    sys.stdout=op
+    print(bin_array,len(bin_array),len(to_write[i-8:]),"Nextstage")
+    # to_write_size=bin(len(to_write))[2:]
+    sys.stdout=op1
+    sys.stdout.write(bytes([len(to_write[i-8:])]))           #Write the length of concatenation of codes
     sys.stdout.write(bytes("\n",encoding="utf-8"))
 
 
@@ -98,12 +99,28 @@ def file_write(document,bin_array):
         # print(bin_array,document[i:i+8])
         i+=8
     sys.stdout.write(bytes(bin_array))
+    op1=sys.stdout
+    sys.stdout=op
+    # print(bin_array)
+    print(i%8,"I",len(document[i-8:]))
+    sys.stdout=op1
+    sys.stdout.write(bytes([len(document[i-8:])]))
     # return document
 # def bin_convert_code(codes):
 #     result=''.join()
 
+def write_large_length(length):
+    # binary=bin(length)
+    # bin_array=array("B")
+    # i=0
+    # while(i<len(binary)):
+    sys.stdout.write(length.to_write(2,"little"))
+    
 
-with open("/home/krishna/Documents/ZipFileCompressor/test-data.txt","r") as f:
+
+
+
+with open("/home/krishna/Documents/ZipFileCompressor/world192.txt","r") as f:
     lines=f.readlines()
     to_compress='\n'.join(lines)
 # with open("/home/krishna/Documents/ZipFileCompressor/download.jpeg","rb") as image:
@@ -132,6 +149,8 @@ s=1000
 # sys.stdout.write(bytes('\n',encoding="ascii"))
 code_write(codes)
 file_write(document,bin_array)
+# sys.stdout.write(bytes)
+# write_large_length(len(document))
 sys.stdout=op
 # print(codes)
 # print(s.to_bytes(2,'big'))
@@ -141,95 +160,99 @@ sys.stdout=op
 # bin_convert_code(codes)
 # print(document[:100])
 print(bytes("{",encoding="utf-8"))
+print(list(bytes([250]))[0])
+print(list(bytes([0])),list(b'0xe2'))
+print(bytes([0]).decode("utf-8"))
+s="C"
 print("\n",len(document),len(to_compress),len(compressed))
+print(codes)
 with open("/home/krishna/Documents/ZipFileCompressor/input4.bin","rb") as f:
-    # print(f.read(1))
-    # print(f.read(1).decode('utf-8'))
-    # data=''
-    # while(data!="\n"):
-    #     data=f.read(1).decode('utf-8')
-    #     print(data,"a")
-    #     print("got")
-    # while(list(f.read(1))[0]!=10):
-    #     print(f.read(1))
-    
-    #Reading the characters and their code sizes
-    charcters=[]
-    data=''
+    charcters=[]                              #Stores list of charatcers and their code lengths"[char,codelength]"
+    data=''                                   
+    #Read the charcters and their code length until consecutive '\n' is encountered in the file
     while(data!="\n"):
         t=[]
-        data=f.read(1).decode('utf-8')
-        # print(data)
-        if(data=="\n"):
-            break
+        data1=f.read(1).decode('utf-8')
+        # print(repr(data1))
         try:
-            t.append(data)
+            t.append(data1)
+            # print(data)
         except:
-            print(data,"Erro")
+            print(data1,"Errorrrrr")
             break
-        data=f.read(1)
+        # data2=f.read(1)
         try:
-            t.append(list(data)[0])
+            data2=f.read(1)
+            t.append(list(data2)[0])
+            if(list(data2)[0]==0):
+                print(list(data2))
+                break
+            # if(data2.decode("utf-8")=="\n"):
+            #     print(data2,data2.decode("utf-8"))
+            #     print("Break")
+            #     break
         except:
-            print(data,"Eroor")
-            print(list(data))
-            break
-        charcters.append(t) #list that contains the character and its codeword length
-    
+                print(data2,"break")
+                break
+        print(t,end=" , ")
+        charcters.append(t)                 #list that contains the character and its codeword length
+    print(charcters)
     #Reading the code words
     char_code=dict()
     data=''
     i=0
-    #Reading the size of code array
-    while(data!="\n"):
-        data=f.read(1)
-        if(data.decode('utf-8')=="\n"):
-            break
-    size=list(data)[0]
-    data=f.read(size)
-    print(list(data))
-    arr=list(data)
-    decoded=''
-    for i in arr[:-2]:
-        binary=bin(i)[2:]
-        zeroes=''.join(['0' for i in range(8-len(binary))])
-        decoded+=zeroes+binary
-    #Reading the size of code string
-    data=''
-    while(data!="\n"):
-        data=f.read(1)
-        if(data.decode('utf-8')=="\n"):
-            break
-    code_size=list(data)[0]
-    binary=bin(arr[-2])[2:]
-    print(binary)
-    zeroes=''.join(['0' for i in range(code_size-len(decoded)-len(binary))])
-    decoded+=zeroes+binary
-    print(decoded) # decoded-String that contains the codeword
+    data=f.read(2)
     # print(data)
-    print(charcters)
-    data=f.read()
-    decoded=''
-    # print(bin_array==list(data))
-    # print(list(data)[0],"Encoded i")
-    arr=list(data)
+    size=list(data)[0]                     #Size of array of encoded integers to read
+    # print(size)
+    data=f.read(size+1)
+    # print(list(data))
+    arr=list(data)[:-1]                    #Array of encoded numbers concatenation of whose binary representation 
+    print(arr)
+    decoded=''                             #String to store the concatenation of binary rep of character codes([1,2,3..]->(0001001110..))
     for i in arr[:-1]:
-        # print(i,bin(i)[2:])
-        # print(bin(i))
+        binary=bin(i)[2:]
+        zeroes=''.join(['0' for i in range(8-len(binary))])   #Concatenate any additional zeroes lost in 80bit rep. of the number
+        decoded+=zeroes+binary
+
+    #Read the length of the encoded character code string
+    data=f.read(2)
+    code_size=list(data)[0]
+    binary=bin(arr[-1])[2:]
+    # print(binary)
+    zeroes=''.join(['0' for i in range(code_size-len(binary))])
+    decoded+=zeroes+binary
+    # print(decoded)                                            #Decoded-String that contains the codeword
+    # print(data)
+    # print(charcters)
+
+    #Read the encoded document content
+    data=f.read()
+    decoded=''                                                #Decodedstring :- concatenation of huff-code rep of the enite document contents
+    # print(bin_array==list(data)[:-1])
+    # print(list(data)[0],"Encoded i")
+    arr_document=list(data)[:-1]                              #Array of int numbers concatenation of whose binary rep. enitire document
+    # print(arr_document)
+    doc_length=list(data)[-1]                                 #The residual difference between the encoded document length and the whole document length
+    for i in arr_document[:-1]:
         binary=bin(i)[2:]
         zeroes=''.join(['0' for i in range(8-len(binary))])
         decoded+=zeroes+binary
         # print(i,zeroes+binary)
     print()
-    # print(len(decoded),len(document))
-    binary=bin(arr[-1])[2:]
-    zeroes=''.join(['0' for i in range(len(document)-len(decoded)-len(binary))])
+    print(len(decoded),len(document))
+    # doc_length=arr_document[-1]
+    binary=bin(arr_document[-1])[2:]
+    zeroes=''.join(['0' for i in range(doc_length-len(binary))])
+    print(len(document)-len(decoded),"DIFF",doc_length)
     decoded+=zeroes+binary
-    # print(bin_array[-10:-1],arr[-10:-1])
+    # print(bin_array==arr_document)
     # print(bin_array[-1],arr[-1],document[-3:-1])
     # print(decoded[-10:-1],document[-10:-1])
     print(decoded==document)
-    print(codes)
+    # s=1000000
+    # print(s.to_bytes(2,"little"))
+    # print(codes)
     # print(compressed)
 
 
