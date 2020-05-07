@@ -120,7 +120,7 @@ def write_large_length(length):
 
 
 start=time.time()
-with open("/home/krishna/Documents/ZipFileCompressor/input.txt","r") as f:
+with open("/home/krishna/Documents/ZipFileCompressor/aaa.txt","r") as f:
     lines=f.readlines()
     to_compress='\n'.join(lines)
 # with open("/home/krishna/Documents/ZipFileCompressor/download.jpeg","rb") as image:
