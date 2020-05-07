@@ -1,8 +1,8 @@
-import sys,os,_heapq,functools,base64,struct
+import sys,os,_heapq,functools,base64,struct,time
 from array import array
 op=sys.stdout
 sys.stdout=open("./input4.bin","wb")
-
+print("Nibba this is new")
 def convert_LZ77(data):
     def longestpresent(word,pos):
         k=1
@@ -119,8 +119,8 @@ def write_large_length(length):
 
 
 
-
-with open("/home/krishna/Documents/ZipFileCompressor/world192.txt","r") as f:
+start=time.time()
+with open("/home/krishna/Documents/ZipFileCompressor/input.txt","r") as f:
     lines=f.readlines()
     to_compress='\n'.join(lines)
 # with open("/home/krishna/Documents/ZipFileCompressor/download.jpeg","rb") as image:
@@ -166,6 +166,7 @@ print(bytes([0]).decode("utf-8"))
 s="C"
 print("\n",len(document),len(to_compress),len(compressed))
 print(codes)
+print("The time taken to compress the file: %s",{time.time()-start})
 with open("/home/krishna/Documents/ZipFileCompressor/input4.bin","rb") as f:
     charcters=[]                              #Stores list of charatcers and their code lengths"[char,codelength]"
     data=''                                   
