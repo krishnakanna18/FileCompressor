@@ -1,4 +1,5 @@
 print("Nibba this is new")
+# import time
 import sys,os,_heapq,functools,base64,struct,time
 from array import array
 op=sys.stdout
@@ -53,8 +54,11 @@ def construct(tree):
     return tree
 
 def Print(root,code,codes):
+    global lines
     if(root.left==None and root.right==None):
         codes[root.c]=code
+        # lines=int(lines.replace(str(root.c),code))
+
         return 
     Print(root.left,code+'0',codes)
     Print(root.right,code+'1',codes)
@@ -62,6 +66,17 @@ def Print(root,code,codes):
 def encode(compressed,codes):
     document=''.join(list(map(lambda x:codes[x],compressed)))
     return document
+    time.sleep(0.3)
+    # document=compressed
+    # document=document.replace('0',chr(254))
+    # document=document.replace('1',chr(255))
+    # for char in codes:
+    #     if(char!='1' and char!='0'):
+    #         document=document.replace(char,codes[char])
+    # document=document.replace(chr(254),codes['0'])
+    # document=document.replace(chr(255),codes['1'])
+    # return document
+
 
 #Write the encoding information(character:huff-code) to the beginning of the output file
 def code_write(codes):
@@ -84,7 +99,7 @@ def code_write(codes):
     sys.stdout.write(bytes("\n",encoding="utf-8"))
     op1=sys.stdout
     sys.stdout=op
-    print(bin_array,len(bin_array),len(to_write[i-8:]),"Nextstage")
+    # print(bin_array,len(bin_array),len(to_write[i-8:]),"Nextstage")
     # to_write_size=bin(len(to_write))[2:]
     sys.stdout=op1
     sys.stdout.write(bytes([len(to_write[i-8:])]))           #Write the length of concatenation of codes
@@ -120,9 +135,10 @@ def write_large_length(length):
 
 
 start=time.time()
-with open("/home/krishna/Documents/ZipFileCompressor/input.txt","r") as f:
-    lines=f.readlines()
-    to_compress='\n'.join(lines)
+with open("/home/krishna/Documents/ZipFileCompressor/opt_check.txt","r") as f:
+    lines=f.read()
+    to_compress=lines
+    # to_compress='\n'.join(lines)
 # with open("/home/krishna/Documents/ZipFileCompressor/download.jpeg","rb") as image:
 #     to_compress=base64.b64decode(image.read())
 
@@ -138,10 +154,14 @@ _heapq.heapify(tree)
 root=construct(tree)
 codes=dict()
 # print(type(root[0][2].left.value()))
+lines=compressed
+# print(lines)
 Print(root[0][2],'',codes)
+# print(lines)
 # print(repr(compressed))
 bin_array=array("B")
 document=encode(compressed,codes)
+# document=lines
 # print(document)
 s=1000
 # sys.stdout.write(s.to_bytes(2,'little'))
@@ -159,11 +179,11 @@ sys.stdout=op
 # print(int("\n"))
 # bin_convert_code(codes)
 # print(document[:100])
+print(document==lines,"Yes da nibba they work gud")
 print(bytes("{",encoding="utf-8"))
 print(list(bytes([250]))[0])
 print(list(bytes([0])),list(b'0xe2'))
 print(bytes([0]).decode("utf-8"))
 s="C"
 print("\n",len(document),len(to_compress),len(compressed))
-print(document,codes)
 print("The time taken to compress the file: %s",{time.time()-start})

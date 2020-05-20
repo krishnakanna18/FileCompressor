@@ -133,7 +133,7 @@ sys.stdout=op
 # bin_convert_code(codes)
 # print(document[:100])
 print("\n",len(document),len(to_compress),len(compressed))
-with open("/home/krishna/Documents/ZipFileCompressor/input3.bin","rb") as f:
+with open("/home/krishna/Documents/ZipFileCompressor/test-data-2.bin","rb") as f:
     # print(f.read(1))
     # print(f.read(1).decode('utf-8'))
     # data=''
