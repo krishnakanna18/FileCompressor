@@ -1,5 +1,3 @@
-print("Nibba this is new")
-# import time
 import sys,os,_heapq,functools,base64,struct,time
 from array import array
 op=sys.stdout
@@ -43,6 +41,7 @@ class Tree:
     def value(self):
         return (self.val,self.c)
 
+# Construct the coding scheme tree
 def construct(tree):
     while(len(tree)>1):
         left=_heapq.heappop(tree)
@@ -53,29 +52,21 @@ def construct(tree):
         _heapq.heappush(tree,root)
     return tree
 
-def Print(root,code,codes):
+
+# Construct the code for the tree
+def find_code(root,code,codes):
     global lines
     if(root.left==None and root.right==None):
         codes[root.c]=code
-        # lines=int(lines.replace(str(root.c),code))
-
         return 
-    Print(root.left,code+'0',codes)
-    Print(root.right,code+'1',codes)
+    find_code(root.left,code+'0',codes)
+    find_code(root.right,code+'1',codes)
 
+
+# Encode the characters in compressed corresponding to codes
 def encode(compressed,codes):
     document=''.join(list(map(lambda x:codes[x],compressed)))
     return document
-    time.sleep(0.3)
-    # document=compressed
-    # document=document.replace('0',chr(254))
-    # document=document.replace('1',chr(255))
-    # for char in codes:
-    #     if(char!='1' and char!='0'):
-    #         document=document.replace(char,codes[char])
-    # document=document.replace(chr(254),codes['0'])
-    # document=document.replace(chr(255),codes['1'])
-    # return document
 
 
 #Write the encoding information(character:huff-code) to the beginning of the output file
@@ -114,15 +105,8 @@ def file_write(document,bin_array):
         # print(bin_array,document[i:i+8])
         i+=8
     sys.stdout.write(bytes(bin_array))
-    op1=sys.stdout
-    sys.stdout=op
-    # print(bin_array)
-    print(i%8,"I",len(document[i-8:]))
-    sys.stdout=op1
     sys.stdout.write(bytes([len(document[i-8:])]))
     # return document
-# def bin_convert_code(codes):
-#     result=''.join()
 
 def write_large_length(length):
     # binary=bin(length)
@@ -135,55 +119,26 @@ def write_large_length(length):
 
 
 start=time.time()
-with open("/home/krishna/Documents/ZipFileCompressor/opt_check.txt","r") as f:
+with open("/home/krishna/Documents/ZipFileCompressor/input2.txt","r") as f:
     lines=f.read()
     to_compress=lines
-    # to_compress='\n'.join(lines)
-# with open("/home/krishna/Documents/ZipFileCompressor/download.jpeg","rb") as image:
-#     to_compress=base64.b64decode(image.read())
-
-# to_compress=str(to_compress)
-# print(to_compress)
-compressed=""
-convert_LZ77(to_compress)
-res=list(set(compressed))
-f=list(map(lambda x: (compressed.count(x),x),res))
-# f=list(map(lambda x: (compressed.count(x),x),list(set(to_compress))))
+    
+compressed=to_compress
+f=list(map(lambda x: (compressed.count(x),x),list(set(to_compress))))
 tree=list(map(lambda x: (x[0],x[1],Tree(x[0],x[1])),f))
 _heapq.heapify(tree)
 root=construct(tree)
 codes=dict()
-# print(type(root[0][2].left.value()))
 lines=compressed
 # print(lines)
-Print(root[0][2],'',codes)
-# print(lines)
-# print(repr(compressed))
+find_code(root[0][2],'',codes)
 bin_array=array("B")
 document=encode(compressed,codes)
-# document=lines
-# print(document)
 s=1000
-# sys.stdout.write(s.to_bytes(2,'little'))
-# sys.stdout.write(bytes('1',encoding="ascii"))
-# sys.stdout.write(bytes('\n',encoding="ascii"))
+# Write the codes onto the file
 code_write(codes)
+# Write the document onto the file
 file_write(document,bin_array)
-# sys.stdout.write(bytes)
-# write_large_length(len(document))
+
 sys.stdout=op
-# print(codes)
-# print(s.to_bytes(2,'big'))
-# print(bin(1024))
-# print(bytes([1]))
-# print(int("\n"))
-# bin_convert_code(codes)
-# print(document[:100])
-print(document==lines,"Yes da nibba they work gud")
-print(bytes("{",encoding="utf-8"))
-print(list(bytes([250]))[0])
-print(list(bytes([0])),list(b'0xe2'))
-print(bytes([0]).decode("utf-8"))
-s="C"
-print("\n",len(document),len(to_compress),len(compressed))
 print("The time taken to compress the file: %s",{time.time()-start})
